@@ -12,8 +12,9 @@ local windDirections = {
     DashDirection = "DashDirection"
 }
 
-anemometer.texture = "Sherplung/WindHelper/Anemometer/Anemometer89"
+anemometer.texture = "Sherplung/WindHelper/Anemometer/AnemometerLoenn"
 anemometer.name = "WindHelper/Anemometer"
+anemometer.justification = {0.5, 0.96875}
 anemometer.fieldInformation = {
     wind_direction = {
         options = windDirections,

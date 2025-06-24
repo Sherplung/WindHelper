@@ -33,7 +33,7 @@ internal class FloatingSpinner : Entity
         Add(new LedgeBlocker());
         Add(new WindMover(Move));
         Add(Sprite = new DustGraphic(ignore_solids, autoControlEyes: true, autoExpandDust: true));
-        base.Depth = -8502;
+        base.Depth = -50;
         Mass = mass;
     }
 
