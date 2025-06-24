@@ -1,0 +1,119 @@
+﻿<Sprites>
+	<Sherplung_WindHelper_pinwheelBlue path="Sherplung/WindHelper/Pinwheel/Blue/" start="idle">
+		<Center/>
+
+		<Loop id="idle" path="PinwheelBlue" delay="0.033" frames="1*55,2,3,4,5,6*55,7,8,9,10"/>
+
+		<Loop id="spin" path="PinwheelBlue" delay="0.016" frames="1-10"/>
+
+		<Anim id="fast" path="PinwheelBlue" delay="0.016" frames="11-14" goto="spin"/>
+
+		<Anim id="spinDown" path="PinwheelBlue" delay="0.016" frames="11-13,9,10,1" goto="idle"/>
+	</Sherplung_WindHelper_pinwheelBlue>
+
+	<Sherplung_WindHelper_bellows path="Sherplung/WindHelper/Bellows/" start="idle">
+
+		<Loop id="idle" path="Bellows" delay="0.033" frames="1"/>
+
+		<Anim id="bounce" path="Bellows" delay="0.007" frames="2,3*9,4,5" goto="idle"/>
+	</Sherplung_WindHelper_bellows>
+
+	<Sherplung_WindHelper_anemometer path="Sherplung/WindHelper/Anemometer/" start="0U">
+		<Origin x="11" y="21"/>
+
+		<Loop id="0U" path="Anemometer" delay="0.033" frames="1,2"/>
+
+		<Loop id="0UR" path="Anemometer" delay="0.033" frames="3,4"/>
+
+		<Loop id="0R" path="Anemometer" delay="0.033" frames="5,6"/>
+
+		<Loop id="0DR" path="Anemometer" delay="0.033" frames="7,8"/>
+
+		<Loop id="0D" path="Anemometer" delay="0.033" frames="9,10"/>
+
+		<Loop id="0DL" path="Anemometer" delay="0.033" frames="11,12"/>
+
+		<Loop id="0L" path="Anemometer" delay="0.033" frames="13,14"/>
+
+		<Loop id="0UL" path="Anemometer" delay="0.033" frames="15,16"/>
+		
+		<Loop id="0DD" path="Anemometer" delay="0.033" frames="17,18"/>
+
+		
+		<Loop id="1U" path="Anemometer" delay="0.033" frames="19,20"/>
+
+		<Loop id="1UR" path="Anemometer" delay="0.033" frames="21,22"/>
+
+		<Loop id="1R" path="Anemometer" delay="0.033" frames="23,24"/>
+
+		<Loop id="1DR" path="Anemometer" delay="0.033" frames="25,26"/>
+
+		<Loop id="1D" path="Anemometer" delay="0.033" frames="27,28"/>
+
+		<Loop id="1DL" path="Anemometer" delay="0.033" frames="29,30"/>
+
+		<Loop id="1L" path="Anemometer" delay="0.033" frames="31,32"/>
+
+		<Loop id="1UL" path="Anemometer" delay="0.033" frames="33,34"/>
+
+		<Loop id="1DD" path="Anemometer" delay="0.033" frames="35,36"/>
+
+		
+		<Loop id="2U" path="Anemometer" delay="0.033" frames="37,38"/>
+
+		<Loop id="2UR" path="Anemometer" delay="0.033" frames="39,40"/>
+
+		<Loop id="2R" path="Anemometer" delay="0.033" frames="41,42"/>
+
+		<Loop id="2DR" path="Anemometer" delay="0.033" frames="43,44"/>
+
+		<Loop id="2D" path="Anemometer" delay="0.033" frames="45,46"/>
+
+		<Loop id="2DL" path="Anemometer" delay="0.033" frames="47,48"/>
+
+		<Loop id="2L" path="Anemometer" delay="0.033" frames="49,50"/>
+
+		<Loop id="2UL" path="Anemometer" delay="0.033" frames="51,52"/>
+
+		<Loop id="2DD" path="Anemometer" delay="0.033" frames="53,54"/>
+		
+
+		<Loop id="3U" path="Anemometer" delay="0.033" frames="55,56"/>
+
+		<Loop id="3UR" path="Anemometer" delay="0.033" frames="57,58"/>
+
+		<Loop id="3R" path="Anemometer" delay="0.033" frames="59,60"/>
+
+		<Loop id="3DR" path="Anemometer" delay="0.033" frames="61,62"/>
+
+		<Loop id="3D" path="Anemometer" delay="0.033" frames="63,64"/>
+
+		<Loop id="3DL" path="Anemometer" delay="0.033" frames="65,66"/>
+
+		<Loop id="3L" path="Anemometer" delay="0.033" frames="67,68"/>
+
+		<Loop id="3UL" path="Anemometer" delay="0.033" frames="69,70"/>
+
+		<Loop id="3DD" path="Anemometer" delay="0.033" frames="71,72"/>
+
+		
+		<Loop id="IU" path="Anemometer" delay="0.033" frames="73,74"/>
+
+		<Loop id="IUR" path="Anemometer" delay="0.033" frames="75,76"/>
+
+		<Loop id="IR" path="Anemometer" delay="0.033" frames="77,78"/>
+
+		<Loop id="IDR" path="Anemometer" delay="0.033" frames="79,80"/>
+
+		<Loop id="ID" path="Anemometer" delay="0.033" frames="81,82"/>
+
+		<Loop id="IDL" path="Anemometer" delay="0.033" frames="83,84"/>
+
+		<Loop id="IL" path="Anemometer" delay="0.033" frames="85,86"/>
+
+		<Loop id="IUL" path="Anemometer" delay="0.033" frames="87,88"/>
+
+		<Loop id="IDD" path="Anemometer" delay="0.033" frames="89,90"/>
+
+	</Sherplung_WindHelper_anemometer>
+</Sprites>

@@ -1,0 +1,7 @@
+- DLL: bin/WindHelper.dll
+  Name: WindHelper
+  Version: 0.1.0
+  Dependencies:
+    - Name: Everest
+    - Name: EverestCore
+      Version: 1.5577.0
