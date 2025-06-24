@@ -50,14 +50,6 @@ internal class FloatingSpinner : Entity
     public override void Update()
     {
         base.Update();
-        /*
-        WindDustEdges windDustEdges = base.Scene.Entities.FindFirst<WindDustEdges>();
-        if (windDustEdges == null)
-        {
-            windDustEdges= new WindDustEdges();
-            base.Scene.Add(windDustEdges);
-        }
-        */
         if (base.Scene.OnInterval(0.05f, offset) && Sprite.Estableshed)
         {
             Player entity = base.Scene.Tracker.GetEntity<Player>();
