@@ -7,7 +7,7 @@ floatingBlock.name = "WindHelper/FloatingBlock"
 floatingBlock.depth = -9000
 function floatingBlock.placements()
     return {
-        name = "Windblown Block",
+        name = "Floating Block",
         data = {
             tiletype = fakeTilesHelper.getPlacementMaterial("m"),
             width = 8,
