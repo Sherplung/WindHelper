@@ -91,7 +91,7 @@ The Duration behavior adds one count of controllable wind at the specified stren
 The WhileInside behavior adds a count of controllable wind at the specified strength when the trigger is entered, and removes it when leaving the trigger.
 Controllable Wind Triggers can also be set to only activate once.
 Controllable wind follows the held direction at all times, including when inside bubbles (boosters).
-The three triggers here, represented by seeker barriers, Add, Remove, and add for 10 seconds controllable wind of strength 400, in order from left to right.
+The three triggers here, represented by seeker barriers, Add, Remove, and add for 10 seconds controllable wind of strength 800, in order from left to right.
 
 SHERPLUNG_WINDHELPER_DEMO_GP1_SIGN=
 This is the first gameplay concept room.

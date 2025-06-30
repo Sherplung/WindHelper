@@ -18,7 +18,7 @@ bellows.placements = {
         name = "Bellows (Up)",
         data = {
             orientation = "Floor",
-            wind_strength = 400.0,
+            wind_strength = 800.0,
             wind_duration = 1.0,
             playerCanUse = true
         }
@@ -27,7 +27,7 @@ bellows.placements = {
         name = "Bellows (Right)",
         data = {
             orientation = "WallLeft",
-            wind_strength = 400.0,
+            wind_strength = 800.0,
             wind_duration = 1.0,
             playerCanUse = true
         }
@@ -36,7 +36,7 @@ bellows.placements = {
         name = "Bellows (Left)",
         data = {
             orientation = "WallRight",
-            wind_strength = 400.0,
+            wind_strength = 800.0,
             wind_duration = 1.0,
             playerCanUse = true
         }

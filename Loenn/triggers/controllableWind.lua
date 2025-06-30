@@ -19,7 +19,7 @@ controllableWind.placements = {
     name = "Controllable Wind",
     data = {
         behaviorType = "WhileInside",
-        windStrength = 400.0,
+        windStrength = 800.0,
         duration = 5.0,
         onlyOnce = false
     }

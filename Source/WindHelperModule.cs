@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Celeste.Mod.WindHelper.Entities;
 using Monocle;
 using static Celeste.WindController;
@@ -39,7 +40,11 @@ public class WindHelperModule : EverestModule {
     }
     private void LoadCustomWindController(Level level, Player.IntroTypes playerIntro, bool isFromLoader)
     {
-        level.Entities.FindFirst<WindController>().RemoveSelf();
+        level.Entities.FindFirst<WindController>()?.RemoveSelf();
         level.Add(level.windController = new ExtendedWindController(level.Session.LevelData.WindPattern));
+        if (playerIntro != 0)
+        {
+            level.windController.SetStartPattern();
+        }
     }
 }

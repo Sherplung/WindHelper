@@ -432,7 +432,7 @@ internal class Anemometer : Actor
             }
             else
             {
-                Audio.Play(SurfaceIndex.GetPathFromIndex(9) + "/landing", Position, "crystal_velocity", 0f);
+                //Audio.Play(SurfaceIndex.GetPathFromIndex(9) + "/landing", Position, "crystal_velocity", 0f);
             }
         }
         if (Speed.Y > 140f && !(data.Hit is SwapBlock) && !(data.Hit is DashSwitch))

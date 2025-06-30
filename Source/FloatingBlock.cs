@@ -255,8 +255,8 @@ internal class FloatingBlock : Solid
         }*/
         foreach (JumpThru jumpthru in Jumpthrus)
             {
-                jumpthru.MoveHCollideSolidsAndBounds(level, newpos.X - origpos.X, false);
-                jumpthru.MoveVCollideSolidsAndBounds(level, newpos.Y - origpos.Y , false, checkBottom: true);
+                jumpthru.MoveH(newpos.X - origpos.X);
+                jumpthru.MoveV(newpos.Y - origpos.Y);
             }
         //}
     }

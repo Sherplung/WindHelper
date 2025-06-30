@@ -7,7 +7,7 @@ pinwheel.placements = {
   {
     name = "Pinwheel",
     data = {
-      wind_strength = 400.0,
+      wind_strength = 800.0,
       wind_duration = 1.0
     }
   }

@@ -26,7 +26,7 @@ anemometer.placements = {
     name = "Anemometer",
     data = {
         wind_direction = "DashDirection",
-        wind_strength = 400.0,
+        wind_strength = 800.0,
         wind_duration = 1.0,
         uses = -1
     }
