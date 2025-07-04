@@ -15,28 +15,28 @@ bellows.fieldInformation = {
 
 bellows.placements = {
     {
-        name = "Bellows (Up)",
+        name = "up",
         data = {
             orientation = "Floor",
-            wind_strength = 800.0,
+            wind_strength = 400.0,
             wind_duration = 1.0,
             playerCanUse = true
         }
     },
     {
-        name = "Bellows (Right)",
+        name = "right",
         data = {
             orientation = "WallLeft",
-            wind_strength = 800.0,
+            wind_strength = 400.0,
             wind_duration = 1.0,
             playerCanUse = true
         }
     },
     {
-        name = "Bellows (Left)",
+        name = "left",
         data = {
             orientation = "WallRight",
-            wind_strength = 800.0,
+            wind_strength = 400.0,
             wind_duration = 1.0,
             playerCanUse = true
         }

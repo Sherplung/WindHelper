@@ -66,16 +66,16 @@ This allows for unique regrabs to be performed using Anemometers of certain wind
 This entity is especially suited for experimentation, so have fun making interesting rooms with it!
 
 SHERPLUNG_WINDHELPER_DEMO_FLOATINGBLOCK_SIGN=
-This entity is called the Floating Block.
-Floating Blocks are solids that are moved by wind.
-Like Floaty Space Blocks, any static mover can be attached to a Floating Block.
-Additionally, Floating Blocks have a "mass" parameter that affects the speed at which they are moved by wind.
-A Floating Block of mass 2 will be pushed half as much as a Floating Block of mass 1, and one of mass 0.5 twice as much as one of mass 1.
+This entity is called the Windblown Block.
+Windblown Blocks are solids that are moved by wind.
+Like Floaty Space Blocks, any static mover can be attached to a Windblown Block.
+Additionally, Windblown Blocks have a "mass" parameter that affects the speed at which they are moved by wind.
+A Windblown Block of mass 2 will be pushed half as much as a Windblown Block of mass 1, and one of mass 0.5 twice as much as one of mass 1.
 
 SHERPLUNG_WINDHELPER_DEMO_FLOATINGSPINNER_SIGN=
-This is the Floating Spinner.
-It's like the Floating Block, except it's a spinner.
-Floating Spinners also have a mass value that affects how they are moved by wind, just like Floating Blocks.
+This is the Windblown Spinner.
+It's like the Windblown Block, except it's a spinner.
+Windblown Spinners also have a mass value that affects how they are moved by wind, just like Windblown Blocks.
 
 SHERPLUNG_WINDHELPER_DEMO_CONTROLLABLEWIND_SIGN=
 Finally, we have the Controllable Wind Trigger.
@@ -96,3 +96,6 @@ The three triggers here, represented by seeker barriers, Add, Remove, and add fo
 SHERPLUNG_WINDHELPER_DEMO_GP1_SIGN=
 This is the first gameplay concept room.
 These will be short, basically just a few inputs, but they may serve as inspiration for other rooms.
+
+SHERPLUNG_WINDHELPER_DEMO_SNEAKING_SIGN=
+Sneaking around, are you?

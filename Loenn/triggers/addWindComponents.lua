@@ -15,10 +15,10 @@ addWindComponents.fieldInformation = {
 }
 
 addWindComponents.placements = {
-    name = "Add Wind (Components)",
+    name = "default",
     data = {
         behaviorType = "WhileInside",
-        windX = 800.0,
+        windX = 400.0,
         windY = 0.0,
         duration = 5.0,
         onlyOnce = false
