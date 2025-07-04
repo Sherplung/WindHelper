@@ -96,3 +96,6 @@ The three triggers here, represented by seeker barriers, Add, Remove, and add fo
 SHERPLUNG_WINDHELPER_DEMO_GP1_SIGN=
 This is the first gameplay concept room.
 These will be short, basically just a few inputs, but they may serve as inspiration for other rooms.
+
+SHERPLUNG_WINDHELPER_DEMO_SNEAKING_SIGN=
+Sneaking around, are you?

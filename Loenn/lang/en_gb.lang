@@ -1,0 +1,115 @@
+mods.WindHelper.name=WindHelper
+
+# --- Entities ---
+
+# Pinwheel
+
+entities.WindHelper/Pinwheel.placements.name.weak=Pinwheel
+entities.WindHelper/Pinwheel.placements.description.weak=Bumper that creates a wind gust in the direction it is hit.
+
+entities.WindHelper/Pinwheel.attributes.name.wind_duration=Duration
+entities.WindHelper/Pinwheel.attributes.description.wind_duration=Duration of the wind gust created by the Pinwheel.
+
+entities.WindHelper/Pinwheel.attributes.name.wind_strength=Wind Strength
+entities.WindHelper/Pinwheel.attributes.description.wind_strength=Strength of the wind gust created by the Pinwheel.
+
+# Bellows
+
+entities.WindHelper/Bellows.placements.name.up=Bellows (Up)
+entities.WindHelper/Bellows.placements.description.up=Spring that creates a wind gust in the direction it faces when hit.
+
+entities.WindHelper/Bellows.placements.name.right=Bellows (Right)
+entities.WindHelper/Bellows.placements.description.right=Spring that creates a wind gust in the direction it faces when hit.
+
+entities.WindHelper/Bellows.placements.name.left=Bellows (Left)
+entities.WindHelper/Bellows.placements.description.left=Spring that creates a wind gust in the direction it faces when hit.
+
+entities.WindHelper/Bellows.attributes.name.orientation=Orientation
+entities.WindHelper/Bellows.attributes.description.orientation=The direction the Bellows face.
+
+entities.WindHelper/Bellows.attributes.name.wind_duration=Duration
+entities.WindHelper/Bellows.attributes.description.wind_duration=Duration of the wind gust created by the Bellows.
+
+entities.WindHelper/Bellows.attributes.name.wind_strength=Wind Strength
+entities.WindHelper/Bellows.attributes.description.wind_strength=Strength of the wind gust created by the Bellows.
+
+entities.WindHelper/Bellows.attributes.name.playerCanUse=Player Can Use
+entities.WindHelper/Bellows.attributes.description.playerCanUse=Whether or not the player can use the Bellows.
+
+# Anemometer
+
+entities.WindHelper/Anemometer.placements.name.default=Anemometer
+entities.WindHelper/Anemometer.placements.description.default=Throwable that creates a wind gust if dash is pressed while held.
+
+entities.WindHelper/Anemometer.attributes.name.uses=Uses
+entities.WindHelper/Anemometer.attributes.description.uses=Number of gusts the Anemometer can produce before it or the player holding it touches the ground. Any negative number counts as infinite.
+
+entities.WindHelper/Anemometer.attributes.name.wind_direction=Direction
+entities.WindHelper/Anemometer.attributes.description.wind_direction=Direction of the wind gust produced by the Anemometer.
+
+entities.WindHelper/Anemometer.attributes.name.wind_duration=Duration
+entities.WindHelper/Anemometer.attributes.description.wind_duration=Duration of the wind gust produced by the Anemometer.
+
+entities.WindHelper/Anemometer.attributes.name.wind_strength=Wind Strength
+entities.WindHelper/Anemometer.attributes.description.wind_strength=Strength of the wind gust produced by the Anemometer.
+
+# Windblown Block
+
+entities.WindHelper/FloatingBlock.placements.name.default=Windblown Block
+entities.WindHelper/FloatingBlock.placements.description.default=Solid block that is moved by wind.
+
+entities.WindHelper/FloatingBlock.attributes.name.mass=Mass
+entities.WindHelper/FloatingBlock.attributes.description.mass=Inversely proportional to how much the block is moved by wind. Can be negative.
+
+# Windblown Spinner
+
+entities.WindHelper/FloatingSpinner.placements.name.default=Windblown Spinner
+entities.WindHelper/FloatingSpinner.placements.description.default=Spinner that is moved by wind.
+
+entities.WindHelper/FloatingSpinner.attributes.name.mass=Mass
+entities.WindHelper/FloatingSpinner.attributes.description.mass=Inversely proportional to how much the spinner is moved by wind. Can be negative.
+
+# --- Triggers ---
+
+# Add Wind Components Trigger
+
+triggers.WindHelper/AddWindComponentsTrigger.placements.name.default=Add Wind (Components)
+triggers.WindHelper/AddWindComponentsTrigger.placements.description.default=Adds additive wind defined by the strengths of its X and Y components.
+
+triggers.WindHelper/AddWindComponentsTrigger.attributes.name.behaviorType=Behavior Type
+triggers.WindHelper/AddWindComponentsTrigger.attributes.description.behaviorType=The way in which the trigger behaves.
+
+triggers.WindHelper/AddWindComponentsTrigger.attributes.name.duration=Duration
+triggers.WindHelper/AddWindComponentsTrigger.attributes.description.duration=Duration of the wind gust created by the trigger. Only has an effect if Behavior Type is set to AddDuration.
+
+triggers.WindHelper/AddWindComponentsTrigger.attributes.name.windX=Wind X
+triggers.WindHelper/AddWindComponentsTrigger.attributes.description.windX=Strength of the X component of the added wind.
+
+triggers.WindHelper/AddWindComponentsTrigger.attributes.name.windY=Wind Y
+triggers.WindHelper/AddWindComponentsTrigger.attributes.description.windY=Strength of the Y component of the added wind.
+
+triggers.WindHelper/AddWindComponentsTrigger.attributes.name.onlyOnce=Only Once
+triggers.WindHelper/AddWindComponentsTrigger.attributes.description.onlyOnce=Whether or not the trigger can only be activated once. Does not persist through death or leaving the room.
+
+# Controllable Wind Trigger
+
+triggers.WindHelper/ControllableWindTrigger.placements.name.default=Controllable Wind
+triggers.WindHelper/ControllableWindTrigger.placements.description.default=Changes the current controllable wind.
+
+triggers.WindHelper/ControllableWindTrigger.attributes.name.behaviorType=Behavior Type
+triggers.WindHelper/ControllableWindTrigger.attributes.description.behaviorType=The way in which the trigger behaves.
+
+triggers.WindHelper/ControllableWindTrigger.attributes.name.duration=Duration
+triggers.WindHelper/ControllableWindTrigger.attributes.description.duration=Duration of the controllable wind created by the trigger. Only has an effect if Behavior Type is set to AddDuration.
+
+triggers.WindHelper/ControllableWindTrigger.attributes.name.windStrength=Wind Strength
+triggers.WindHelper/ControllableWindTrigger.attributes.description.windStrength=Strength of the controllable wind added or removed by the trigger.
+
+triggers.WindHelper/ControllableWindTrigger.attributes.name.onlyOnce=Only Once
+triggers.WindHelper/ControllableWindTrigger.attributes.description.onlyOnce=Whether or not the trigger can only be activated once. Does not persist through death or leaving the room.
+
+# --- Stylegrounds ---
+
+# Diagonal Wind Snow
+
+style.effects.WindHelper/DiagonalWindSnowFG.name=Wind Snow (Diagonal)

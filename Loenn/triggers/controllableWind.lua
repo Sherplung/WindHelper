@@ -16,7 +16,7 @@ controllableWind.fieldInformation = {
 }
 
 controllableWind.placements = {
-    name = "Controllable Wind",
+    name = "default",
     data = {
         behaviorType = "WhileInside",
         windStrength = 800.0,

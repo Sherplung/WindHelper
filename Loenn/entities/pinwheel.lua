@@ -5,9 +5,9 @@ pinwheel.depth = 0
 pinwheel.texture = "Sherplung/WindHelper/Pinwheel/Blue/PinwheelBlueLoenn"
 pinwheel.placements = {
   {
-    name = "Pinwheel",
+    name = "weak",
     data = {
-      wind_strength = 800.0,
+      wind_strength = 400.0,
       wind_duration = 1.0
     }
   }

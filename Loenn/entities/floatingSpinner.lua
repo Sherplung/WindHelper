@@ -7,7 +7,7 @@ floatingSpinner.texture = "Sherplung/WindHelper/FloatingSpinner/fg_FloatingSpinn
 floatingSpinner.depth = 0
 floatingSpinner.placements = {
   {
-    name = "Windblown Spinner",
+    name = "default",
     data = {
       mass = 1.0
     }

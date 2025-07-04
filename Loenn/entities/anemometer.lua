@@ -23,7 +23,7 @@ anemometer.fieldInformation = {
 }
 
 anemometer.placements = {
-    name = "Anemometer",
+    name = "default",
     data = {
         wind_direction = "DashDirection",
         wind_strength = 800.0,
