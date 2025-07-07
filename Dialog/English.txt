@@ -1,13 +1,15 @@
 Sherplung_WindHelper= WindHelper
 
-Sherplung_WindHelper_1_windhelper_demonstration= WindHelper Demo
+Sherplung_WindHelperMaps= WindHelperMaps
 
-poem_Sherplung_WindHelper_1_windhelper_demonstration_A=
+Sherplung_WindHelperMaps_1_windhelper_demonstration= WindHelper Demo
+
+poem_Sherplung_WindHelperMaps_1_windhelper_demonstration_A=
 Have fun mapping!
 
-Sherplung_WindHelper_2_pinwheel_test= incoherent test map
+Sherplung_WindHelperMaps_2_pinwheel_test= incoherent test map
 
-poem_Sherplung_WindHelper_2_pinwheel_test_A=
+poem_Sherplung_WindHelperMaps_2_pinwheel_test_A=
 wow very impressive
 
 SHERPLUNG_WINDHELPER_DEMO_START_SIGN=
