@@ -12,7 +12,9 @@ function floatingBlock.placements()
             tiletype = fakeTilesHelper.getPlacementMaterial("m"),
             width = 8,
             height = 8,
-            mass = 1.0
+            mass = 1.0,
+            lockX = false,
+            lockY = false
         }
     }
 end

@@ -7,11 +7,20 @@ mods.WindHelper.name=WindHelper
 entities.WindHelper/Pinwheel.placements.name.weak=Pinwheel
 entities.WindHelper/Pinwheel.placements.description.weak=Bumper that creates a wind gust in the direction it is hit.
 
+entities.WindHelper/Pinwheel.placements.name.cardinal=Pinwheel (Cardinal)
+entities.WindHelper/Pinwheel.placements.description.cardinal=Bumper that creates a wind gust in the closest cardinal direction to the direction it is hit.
+
 entities.WindHelper/Pinwheel.attributes.name.wind_duration=Duration
 entities.WindHelper/Pinwheel.attributes.description.wind_duration=Duration of the wind gust created by the Pinwheel.
 
 entities.WindHelper/Pinwheel.attributes.name.wind_strength=Wind Strength
 entities.WindHelper/Pinwheel.attributes.description.wind_strength=Strength of the wind gust created by the Pinwheel.
+
+entities.WindHelper/Pinwheel.attributes.name.behaviorType=Behavior
+entities.WindHelper/Pinwheel.attributes.description.behaviorType=Various ways in which the Pinwheel chooses the direction to create the gust.
+
+entities.WindHelper/Pinwheel.attributes.name.uses=Uses
+entities.WindHelper/Pinwheel.attributes.description.uses=How many times the Pinwheel can be used before reloading the room. Negative values result in infinite uses.
 
 # Bellows
 
@@ -42,7 +51,7 @@ entities.WindHelper/Anemometer.placements.name.default=Anemometer
 entities.WindHelper/Anemometer.placements.description.default=Throwable that creates a wind gust if dash is pressed while held.
 
 entities.WindHelper/Anemometer.attributes.name.uses=Uses
-entities.WindHelper/Anemometer.attributes.description.uses=Number of gusts the Anemometer can produce before it or the player holding it touches the ground. Any negative number counts as infinite.
+entities.WindHelper/Anemometer.attributes.description.uses=Number of gusts the Anemometer can produce before refreshing. Any negative number counts as infinite.
 
 entities.WindHelper/Anemometer.attributes.name.wind_direction=Direction
 entities.WindHelper/Anemometer.attributes.description.wind_direction=Direction of the wind gust produced by the Anemometer.
@@ -53,6 +62,9 @@ entities.WindHelper/Anemometer.attributes.description.wind_duration=Duration of 
 entities.WindHelper/Anemometer.attributes.name.wind_strength=Wind Strength
 entities.WindHelper/Anemometer.attributes.description.wind_strength=Strength of the wind gust produced by the Anemometer.
 
+entities.WindHelper/Anemometer.attributes.name.canRefresh=Can Refresh
+entities.WindHelper/Anemometer.attributes.description.canRefresh=Whether or not the Anemometer refreshes its number of uses remaining when it or the player holding it touches the ground.
+
 # Windblown Block
 
 entities.WindHelper/FloatingBlock.placements.name.default=Windblown Block
@@ -61,6 +73,12 @@ entities.WindHelper/FloatingBlock.placements.description.default=Solid block tha
 entities.WindHelper/FloatingBlock.attributes.name.mass=Mass
 entities.WindHelper/FloatingBlock.attributes.description.mass=Inversely proportional to how much the block is moved by wind. Can be negative.
 
+entities.WindHelper/FloatingBlock.attributes.name.lockX=Lock X
+entities.WindHelper/FloatingBlock.attributes.description.lockX=Whether or not the block can move on the X axis.
+
+entities.WindHelper/FloatingBlock.attributes.name.lockY=Lock Y
+entities.WindHelper/FloatingBlock.attributes.description.lockY=Whether or not the block can move on the Y axis.
+
 # Windblown Spinner
 
 entities.WindHelper/FloatingSpinner.placements.name.default=Windblown Spinner
@@ -68,6 +86,12 @@ entities.WindHelper/FloatingSpinner.placements.description.default=Spinner that 
 
 entities.WindHelper/FloatingSpinner.attributes.name.mass=Mass
 entities.WindHelper/FloatingSpinner.attributes.description.mass=Inversely proportional to how much the spinner is moved by wind. Can be negative.
+
+entities.WindHelper/FloatingSpinner.attributes.name.lockX=Lock X
+entities.WindHelper/FloatingSpinner.attributes.description.lockX=Whether or not the spinner can move on the X axis.
+
+entities.WindHelper/FloatingSpinner.attributes.name.lockY=Lock Y
+entities.WindHelper/FloatingSpinner.attributes.description.lockY=Whether or not the spinner can move on the Y axis.
 
 # --- Triggers ---
 
@@ -113,3 +137,22 @@ triggers.WindHelper/ControllableWindTrigger.attributes.description.onlyOnce=Whet
 # Diagonal Wind Snow
 
 style.effects.WindHelper/DiagonalWindSnowFG.name=Wind Snow (Diagonal)
+
+style.effects.WindHelper/DiagonalWindSnowFG.attribute.color=Color
+style.effects.WindHelper/DiagonalWindSnowFG.description.color=Color of the particles.
+
+style.effects.WindHelper/DiagonalWindSnowFG.attribute.density=Density
+style.effects.WindHelper/DiagonalWindSnowFG.description.density=Number of particles rendered.
+
+style.effects.WindHelper/DiagonalWindSnowFG.attribute.thinningFactor= Thinning
+style.effects.WindHelper/DiagonalWindSnowFG.description.thinningFactor=How much the particles become thinner with speed. Thinning is proportional to the natural log of the wind speed multiplied by this factor. Smaller numbers mean less thinning.
+
+# Diagonal Star Dust
+
+style.effects.WindHelper/DiagonalStardustFG.name=Star Dust (Diagonal)
+
+style.effects.WindHelper/DiagonalStardustFG.attribute.colors=Colors
+style.effects.WindHelper/DiagonalStardustFG.description.colors=Comma-separated list of colors the particles can have.
+
+style.effects.WindHelper/DiagonalStardustFG.attribute.density=Density
+style.effects.WindHelper/DiagonalStardustFG.description.density=Number of particles rendered.

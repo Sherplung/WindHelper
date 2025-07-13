@@ -13,6 +13,15 @@ bellows.fieldInformation = {
     }
 }
 
+bellows.fieldOrder = {
+    "x",
+    "y",
+    "wind_strength",
+    "wind_duration",
+    "orientation",
+    "playerCanUse"
+}
+
 bellows.placements = {
     {
         name = "up",

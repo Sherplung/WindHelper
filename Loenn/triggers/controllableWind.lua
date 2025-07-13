@@ -15,6 +15,17 @@ controllableWind.fieldInformation = {
     }
 }
 
+controllableWind.fieldOrder = {
+    "x",
+    "y",
+    "width",
+    "height",
+    "windStrength",
+    "duration",
+    "behaviorType",
+    "onlyOnce"
+}
+
 controllableWind.placements = {
     name = "default",
     data = {

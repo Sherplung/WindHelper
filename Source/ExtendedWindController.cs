@@ -50,6 +50,21 @@ public class ExtendedWindController : WindController
         additivePermaWind = Vector2.Zero;
     }
 
+    private void AdditiveSetAmbienceStrength(bool strong)
+    {
+        int num = 0;
+        if ((targetSpeed + totalAddedWind).X != 0f)
+        {
+            num = Math.Sign((targetSpeed + totalAddedWind).X);
+        }
+        else if ((targetSpeed + totalAddedWind).Y != 0f)
+        {
+            num = Math.Sign((targetSpeed + totalAddedWind).Y);
+        }
+        Audio.SetParameter(Audio.CurrentAmbienceEventInstance, "wind_direction", num);
+        Audio.SetParameter(Audio.CurrentAmbienceEventInstance, "strong_wind", strong ? 1 : 0);
+    }
+
     private IEnumerator TimedWind(Vector2 wind, float duration)
     {
         fastEasing = true;
@@ -121,10 +136,10 @@ public class ExtendedWindController : WindController
                 SetAmbienceStrength(strong: false);
             }
         }
-        //handling controllable wind
+        // handling controllable wind
         heldDirection.X = Input.MoveX;
         heldDirection.Y = Input.MoveY;
-        if (heldDirection != Vector2.Zero) { heldDirection.SafeNormalize(); }
+        heldDirection = heldDirection.SafeNormalize(ifZero : Vector2.Zero);
         if (controllableWindCount > 0)
         {
             controllableWind = heldDirection * controllableWindStrength;
@@ -135,7 +150,7 @@ public class ExtendedWindController : WindController
             controllableWindStrength = 0f;
             controllableWindCount = 0;
         }
-        //additive wind easing type selector
+        // additive wind easing type selector
         totalAddedWind = controllableWind + additiveWind + additivePermaWind;
         switch (WindHelperModule.Settings.AdditiveWindEasing)
         {
@@ -168,6 +183,22 @@ public class ExtendedWindController : WindController
                 break;
         }
         incrementerPattern = Calc.Approach(incrementerPattern, targetSpeed, 1000f * Engine.DeltaTime);
+
+        // handle ambience
+        if (WindHelperModule.Settings.AdditiveWindAmbience == true)
+        {
+            // if the total target wind has a magnitude greater than or equal to 800 (LengthSquared is faster apparently)
+            if ((totalAddedWind + targetSpeed).LengthSquared() >= (640000f - 1000f))
+            {
+                AdditiveSetAmbienceStrength(strong: true);
+            }
+            else if ((totalAddedWind + targetSpeed).LengthSquared() >= 0f)
+            {
+                AdditiveSetAmbienceStrength(strong: false);
+            }
+        }
+
+        // actually move stuff
         level.Wind = incrementerPattern + incrementerAdditive;
         if (level.Wind.Equals(Vector2.Zero) || level.Transitioning)
         {

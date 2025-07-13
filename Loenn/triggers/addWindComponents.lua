@@ -14,6 +14,18 @@ addWindComponents.fieldInformation = {
     }
 }
 
+addWindComponents.fieldOrder = {
+    "x",
+    "y",
+    "width",
+    "height",
+    "windX",
+    "windY",
+    "duration",
+    "behaviorType",
+    "onlyOnce"
+}
+
 addWindComponents.placements = {
     name = "default",
     data = {

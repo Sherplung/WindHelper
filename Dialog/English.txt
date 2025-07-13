@@ -2,6 +2,14 @@ Sherplung_WindHelper= WindHelper
 
 Sherplung_WindHelperMaps= WindHelperMaps
 
+SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDEASING= Additive Wind Easing
+
+SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDEASING_HINT= Changes how the level wind eases to the additive wind value.
+
+SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDAMBIENCE= Additive Wind Ambience
+
+SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDAMBIENCE_HINT= Sets whether or not the ambient wind noise is affected by additive wind.
+
 Sherplung_WindHelperMaps_1_windhelper_demonstration= WindHelper Demo
 
 poem_Sherplung_WindHelperMaps_1_windhelper_demonstration_A=
@@ -38,12 +46,20 @@ The default setting for easing is to instantly change the wind speed to the targ
 This maintains the snappy feel desired with the wind sources in this helper but alleviates the feeling of a gust abruptly ending.
 For precision maps, an option to have no additive wind easing exists, among others.
 Experiment and find what setting feels best for your map!
+Additionally, the option exists to make the wind ambience change due to additive wind.
+This is disabled by default, as it can sound strange when the additive wind is changing rapidly.
 
 SHERPLUNG_WINDHELPER_DEMO_PINWHEEL_SIGN=
 The first entity that will be shown off here is the Pinwheel.
 Pinwheels work identically to bumpers, except that they produce a gust of wind in the direction that they were hit.
 The duration and strength of this gust can be changed to any value to accommodate for room design or desired gameplay.
 You cannot hit a Pinwheel again until the gust it produces ends, so one Pinwheel can only produce one gust at a time.
+Pinwheels can also be set to have a limited number of uses, which is displayed on the Pinwheel as text when the number of uses is greater than zero.
+If the Pinwheel runs out of uses, it can no longer be interacted with and will turn gray.
+The way in which Pinwheels choose what direction to produce the gust in is also not fixed.
+Two settings currently exist for this.
+Blue Pinwheels produce the gust in the exact direction that they were hit.
+Red and white Pinwheels produce the gust in the closest cardinal direction to the direction they were hit (hence why they are called Cardinal Pinwheels).
 
 SHERPLUNG_WINDHELPER_DEMO_BELLOWS_SIGN=
 Next up are the Bellows.
@@ -73,11 +89,14 @@ Windblown Blocks are solids that are moved by wind.
 Like Floaty Space Blocks, any static mover can be attached to a Windblown Block.
 Additionally, Windblown Blocks have a "mass" parameter that affects the speed at which they are moved by wind.
 A Windblown Block of mass 2 will be pushed half as much as a Windblown Block of mass 1, and one of mass 0.5 twice as much as one of mass 1.
+Windblown Blocks can also be configured to prevent their movement on either the X or Y axis to make their movement more predictable in large rooms.
 
 SHERPLUNG_WINDHELPER_DEMO_FLOATINGSPINNER_SIGN=
 This is the Windblown Spinner.
 It's like the Windblown Block, except it's a spinner.
 Windblown Spinners also have a mass value that affects how they are moved by wind, just like Windblown Blocks.
+Their movement can be axis locked as well.
+Only Windblown Spinners of identical mass and axis lock parameters will have spinner juice form between them.
 
 SHERPLUNG_WINDHELPER_DEMO_CONTROLLABLEWIND_SIGN=
 Finally, we have the Controllable Wind Trigger.

@@ -33,10 +33,13 @@ internal class DiagonalWindSnowFG : Backdrop
 
     private float visibleFade = 1f;
 
+    private float thinningFactor;
+
     public DiagonalWindSnowFG(BinaryPacker.Element data)
     {
-        Color = Color.White;
-        positions = new Vector2[240];
+        Color = Calc.HexToColor(data.Attr("color", defaultValue: "ffffff"));
+        positions = new Vector2[data.AttrInt("density", defaultValue: 240)];
+        thinningFactor = data.AttrFloat("thinningFactor", defaultValue: 0f);
         for (int i = 0; i < positions.Length; i++)
         {
             positions[i] = Calc.Random.Range(new Vector2(0f, 0f), new Vector2(loopWidth, loopHeight));
@@ -60,11 +63,12 @@ internal class DiagonalWindSnowFG : Backdrop
         }
         if (level.Wind != Vector2.Zero)
         {
+            float magnitude = level.Wind.Length();
             rotation = level.Wind.Angle();
             //scale.X = Math.Max(1f, Math.Abs(level.Wind.X) / 100f);
-            scale.X = Math.Max(1f, level.Wind.Length() / 100f);
+            scale.X = Math.Max(1f, magnitude / 100f);
             //scale.Y = 1f / Math.Max(1f, Math.Abs(level.Wind.Y) / 100f);
-            scale.Y = 1f;
+            scale.Y = 1f / Math.Max(1f, (float)Math.Log(magnitude) * thinningFactor);
         }
         else
         {

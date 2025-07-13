@@ -37,26 +37,27 @@ internal class FloatingBlock : Solid
 
     private float Mass;
 
+    private bool lockX;
+
+    private bool lockY;
+
     private Level level;
 
     public bool HasGroup { get; private set; }
 
     public bool MasterOfGroup { get; private set; }
 
-    public FloatingBlock(Vector2 position, float width, float height, char tileType, float mass)
-        : base(position, width, height, safe: false)
+    public FloatingBlock(EntityData data, Vector2 offset)
+        : base(data.Position + offset, data.Width, data.Height, safe: false)
     {
-        this.tileType = tileType;
+        this.tileType = data.Char("tiletype", '3');
         base.Depth = -9000;
         Add(new LightOcclude());
         Add(new WindMover(Move));
         SurfaceSoundIndex = SurfaceIndex.TileToIndex[tileType];
-        Mass = mass;
-    }
-
-    public FloatingBlock(EntityData data, Vector2 offset)
-        : this(data.Position + offset, data.Width, data.Height, data.Char("tiletype", '3'), data.Float("mass"))
-    {
+        Mass = data.Float("mass", 1f);
+        lockX = data.Bool("lockX", false);
+        lockY = data.Bool("lockY", false);
     }
 
     public override void Awake(Scene scene)
@@ -243,8 +244,14 @@ internal class FloatingBlock : Solid
     private void Move(Vector2 strength)
     {
         Vector2 origpos = this.Position;
-        this.MoveHCollideSolidsAndBounds(level, strength.X / Mass, false);
-        this.MoveVCollideSolidsAndBounds(level, strength.Y / Mass, false, checkBottom: true);
+        if (!lockX)
+        {
+            this.MoveHCollideSolidsAndBounds(level, strength.X / Mass, false);
+        }
+        if (!lockY)
+        {
+            this.MoveVCollideSolidsAndBounds(level, strength.Y / Mass, false, checkBottom: true);
+        }
         Vector2 newpos = this.Position;
         //if(MasterOfGroup)
         //{

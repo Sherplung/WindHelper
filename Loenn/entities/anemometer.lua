@@ -22,13 +22,24 @@ anemometer.fieldInformation = {
     }
 }
 
+anemometer.fieldOrder = {
+    "x",
+    "y",
+    "wind_strength",
+    "wind_duration",
+    "wind_direction",
+    "uses",
+    "canRefresh"
+}
+
 anemometer.placements = {
     name = "default",
     data = {
         wind_direction = "DashDirection",
         wind_strength = 800.0,
         wind_duration = 1.0,
-        uses = -1
+        uses = -1,
+        canRefresh = true
     }
 }
 

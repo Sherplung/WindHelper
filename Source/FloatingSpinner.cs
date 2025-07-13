@@ -80,23 +80,24 @@ internal class FloatingSpinner : Entity
 
     public float Mass;
 
-    public FloatingSpinner(Vector2 position, float mass = 1, bool ignore_solids = true)
-        : base(position)
+    public bool lockX;
+
+    public bool lockY;
+
+    public FloatingSpinner(EntityData data, Vector2 offset)
+        : base(data.Position + offset)
     {
+        ID = data.ID;
         base.Collider = new ColliderList(new Circle(6f), new Hitbox(16f, 4f, -8f, -3f));
         Add(new PlayerCollider(OnPlayer));
         Add(new HoldableCollider(OnHoldable));
         Add(new LedgeBlocker());
         Add(new WindMover(Move));
         base.Depth = -8502;
-        Mass = mass;
+        Mass = data.Float("mass", 1f);
         randomSeed = Calc.Random.Next();
-    }
-
-    public FloatingSpinner(EntityData data, Vector2 offset)
-        : this(data.Position + offset, data.Float("mass"))
-    {
-        ID = data.ID;
+        lockX = data.Bool("lockX", false);
+        lockY = data.Bool("lockY", false);
     }
 
     public float GetMass()
@@ -188,7 +189,7 @@ internal class FloatingSpinner : Entity
         }
         foreach (FloatingSpinner entity in base.Scene.Tracker.GetEntities<FloatingSpinner>())
         {
-            if (entity.ID > ID && entity.Mass == Mass && (entity.Position - Position).LengthSquared() < 576f)
+            if (entity.ID > ID && entity.Mass == Mass && entity.lockX == lockX && entity.lockY == lockY && (entity.Position - Position).LengthSquared() < 576f)
             {
                 AddSprite((Position + entity.Position) / 2f - Position);
             }
@@ -269,7 +270,14 @@ internal class FloatingSpinner : Entity
 
     private void Move(Vector2 strength)
     {
-        base.Position += strength / Mass;
+        if (!lockX)
+        {
+            base.Position.X += strength.X / Mass;
+        }
+        if (!lockY)
+        {
+            base.Position.Y += strength.Y / Mass;
+        }
         /*
         if (filler == null)
         {

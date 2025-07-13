@@ -19,6 +19,13 @@ public class WindHelperModuleSettings : EverestModuleSettings {
         EaseFastUpEaseSlowDown = 3,
         EaseFastStartEaseSlowEnd = 4
     }
+
+    [SettingName("SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDEASING")]
+    [SettingSubText("SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDEASING_HINT")]
     public EasingTypes AdditiveWindEasing { get; set; } = EasingTypes.EaseSlowToZero;
+
+    [SettingName("SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDAMBIENCE")]
+    [SettingSubText("SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDAMBIENCE_HINT")]
+    public bool AdditiveWindAmbience { get; set; } = false;
 
 }

@@ -1,4 +1,7 @@
+local drawableSpriteStruct = require("structs.drawable_sprite")
 local utils = require("utils")
+
+local spinnerConnectionDistanceSquared = 24 * 24
 
 local floatingSpinner = {}
 
@@ -9,7 +12,9 @@ floatingSpinner.placements = {
   {
     name = "default",
     data = {
-      mass = 1.0
+      mass = 1.0,
+      lockX = false,
+      lockY = false
     }
   }
 }

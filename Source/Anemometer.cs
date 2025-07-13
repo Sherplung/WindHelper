@@ -42,6 +42,8 @@ internal class Anemometer : Actor
 
     private int usesRemaining;
 
+    private bool canRefresh;
+
     public Vector2 Speed;
 
     public Holdable Hold;
@@ -78,12 +80,7 @@ internal class Anemometer : Actor
         windDuration = data.Float("wind_duration");
         uses = data.Int("uses");
         usesRemaining = uses;
-        if (uses < 0) { animCount = "I"; }
-        else if (uses == 0) { animCount = "0"; }
-        else if (uses == 1) { animCount = "1"; }
-        else if (uses == 2) { animCount = "2"; }
-        else if (uses == 3) { animCount = "3"; }
-        else { animCount = "3"; }
+        canRefresh = data.Bool("canRefresh", defaultValue: true);
         previousPosition = base.Position;
         base.Depth = 100;
         base.Collider = new Hitbox(8f, 10f, -4f, -10f);
@@ -111,65 +108,84 @@ internal class Anemometer : Actor
             case WindDirections.Up:
                 windDirectionVector.Y = -1;
                 windDirectionVector.X = 0;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "U";
                 break;
             case WindDirections.UpRight:
                 windDirectionVector.Y = -1;
                 windDirectionVector.X = 1;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "UR";
                 break;
             case WindDirections.Right:
                 windDirectionVector.Y = 0;
                 windDirectionVector.X = 1;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "R";
                 break;
             case WindDirections.DownRight:
                 windDirectionVector.Y = 1;
                 windDirectionVector.X = 1;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "DR";
                 break;
             case WindDirections.Down:
                 windDirectionVector.Y = 1;
                 windDirectionVector.X = 0;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "D";
                 break;
             case WindDirections.DownLeft:
                 windDirectionVector.Y = 1;
                 windDirectionVector.X = -1;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "DL";
                 break;
             case WindDirections.Left:
                 windDirectionVector.Y = 0;
                 windDirectionVector.X = -1;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "L";
                 break;
             case WindDirections.UpLeft:
                 windDirectionVector.Y = -1;
                 windDirectionVector.X = -1;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "UL";
                 break;
             case WindDirections.DashDirection:
                 windDirectionVector.Y = 0;
                 windDirectionVector.X = 0;
-                windDirectionVector.SafeNormalize();
+                windDirectionVector.Normalize();
                 animDir = "DD";
                 break;
         }
-        sprite.Play(animCount + animDir);
+        UpdateSprite();
     }
 
     public override void Added(Scene scene)
     {
         base.Added(scene);
         Level = SceneAs<Level>();
+    }
+
+    private void Refresh()
+    {
+        if (canRefresh)
+        {
+            usesRemaining = uses;
+        }
+    }
+
+    private void UpdateSprite()
+    {
+        if (uses < 0) { animCount = "I"; }
+        else if (usesRemaining == 0) { animCount = "0"; }
+        else if (usesRemaining == 1) { animCount = "1"; }
+        else if (usesRemaining == 2) { animCount = "2"; }
+        else if (usesRemaining == 3) { animCount = "3"; }
+        else { animCount = "3"; }
+        sprite.Play(animCount + animDir);
     }
 
     public override void Update()
@@ -196,56 +212,32 @@ internal class Anemometer : Actor
                     windCooldown = windDuration;
                     Audio.Play("event:/new_content/game/10_farewell/glider_engage", Position);
                     usesRemaining--;
-                    if (uses < 0) { animCount = "I"; }
-                    else if (usesRemaining == 0) { animCount = "0"; }
-                    else if (usesRemaining == 1) { animCount = "1"; }
-                    else if (usesRemaining == 2) { animCount = "2"; }
-                    else if (usesRemaining == 3) { animCount = "3"; }
-                    else { animCount = "3"; }
-                    sprite.Play(animCount + animDir);
+                    UpdateSprite();
                 }
                 else if(Input.MoveX != 0 || Input.MoveY != 0)
                 {
                     windDirectionVector.X = Input.MoveX;
                     windDirectionVector.Y = Input.MoveY;
-                    windDirectionVector.SafeNormalize();
+                    windDirectionVector = windDirectionVector.SafeNormalize(ifZero: Vector2.Zero);
                     windController.AddWind(windStrength * windDirectionVector, windDuration);
                     windCooldown = windDuration;
                     Audio.Play("event:/new_content/game/10_farewell/glider_engage", Position);
                     usesRemaining--;
-                    if (uses < 0) { animCount = "I"; }
-                    else if (usesRemaining == 0) { animCount = "0"; }
-                    else if (usesRemaining == 1) { animCount = "1"; }
-                    else if (usesRemaining == 2) { animCount = "2"; }
-                    else if (usesRemaining == 3) { animCount = "3"; }
-                    else { animCount = "3"; }
-                    sprite.Play(animCount + animDir);
+                    UpdateSprite();
                 }
             }
             else if (player.OnGround())
             {
-                usesRemaining = uses;
-                if (uses < 0) { animCount = "I"; }
-                else if (usesRemaining == 0) { animCount = "0"; }
-                else if (usesRemaining == 1) { animCount = "1"; }
-                else if (usesRemaining == 2) { animCount = "2"; }
-                else if (usesRemaining == 3) { animCount = "3"; }
-                else { animCount = "3"; }
-                sprite.Play(animCount + animDir);
+                Refresh();
+                UpdateSprite();
             }
         }
         else
         {
             if (OnGround())
             {
-                usesRemaining = uses;
-                if (uses < 0) { animCount = "I"; }
-                else if (usesRemaining == 0) { animCount = "0"; }
-                else if (usesRemaining == 1) { animCount = "1"; }
-                else if (usesRemaining == 2) { animCount = "2"; }
-                else if (usesRemaining == 3) { animCount = "3"; }
-                else { animCount = "3"; }
-                sprite.Play(animCount + animDir);
+                Refresh();
+                UpdateSprite();
                 float target = ((!OnGround(Position + Vector2.UnitX * 3f)) ? 20f : (OnGround(Position - Vector2.UnitX * 3f) ? 0f : (-20f)));
                 Speed.X = Calc.Approach(Speed.X, target, 800f * Engine.DeltaTime);
                 Vector2 liftSpeed = base.LiftSpeed;
@@ -359,7 +351,7 @@ internal class Anemometer : Actor
         {
             Speed = (base.Center - seeker.Center).SafeNormalize(120f);
         }
-        Audio.Play("event:/new_content/game/10_farewell/fusebox_hit_1", Position);
+        Audio.Play("event:/sherplung/wind_helper/anemometer_impact", Position);
     }
 
     public void HitSpinner(Entity spinner)
@@ -413,7 +405,7 @@ internal class Anemometer : Actor
         {
             (data.Hit as DashSwitch).OnDashCollide(null, Vector2.UnitX * Math.Sign(Speed.X));
         }
-        Audio.Play("event:/new_content/game/10_farewell/fusebox_hit_1", Position);
+        Audio.Play("event:/sherplung/wind_helper/anemometer_impact", Position);
         Speed.X *= -0.4f;
     }
 
@@ -427,7 +419,7 @@ internal class Anemometer : Actor
         {
             if (hardVerticalHitSoundCooldown <= 0f)
             {
-                Audio.Play("event:/new_content/game/10_farewell/fusebox_hit_1", Position, "crystal_velocity", Calc.ClampedMap(Speed.Y, 0f, 200f));
+                Audio.Play("event:/sherplung/wind_helper/anemometer_impact", Position, "crystal_velocity", Calc.ClampedMap(Speed.Y, 0f, 200f));
                 hardVerticalHitSoundCooldown = 1f;
             }
             else
