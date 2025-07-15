@@ -132,6 +132,17 @@ triggers.WindHelper/ControllableWindTrigger.attributes.description.windStrength=
 triggers.WindHelper/ControllableWindTrigger.attributes.name.onlyOnce=Only Once
 triggers.WindHelper/ControllableWindTrigger.attributes.description.onlyOnce=Whether or not the trigger can only be activated once. Does not persist through death or leaving the room.
 
+# Custom Wind Pattern Trigger
+
+triggers.WindHelper/CustomWindPatternTrigger.placements.name.default=Wind Pattern (Programmable)
+triggers.WindHelper/CustomWindPatternTrigger.placements.description.default=Sets and starts a customizable pattern of additive wind.
+
+triggers.WindHelper/CustomWindPatternTrigger.attributes.name.instructions=Instructions
+triggers.WindHelper/CustomWindPatternTrigger.attributes.description.instructions=List of values for the wind pattern to loop through. The three values in each sublist are Wind X, Wind Y, and Duration in seconds, in that order.
+
+triggers.WindHelper/CustomWindPatternTrigger.attributes.name.onlyOnce=Only Once
+triggers.WindHelper/CustomWindPatternTrigger.attributes.description.onlyOnce=Whether or not the trigger can be activated multiple times.
+
 # --- Stylegrounds ---
 
 # Diagonal Wind Snow
