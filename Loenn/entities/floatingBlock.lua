@@ -5,6 +5,20 @@ local floatingBlock = {}
 
 floatingBlock.name = "WindHelper/FloatingBlock"
 floatingBlock.depth = -9000
+
+floatingBlock.fieldOrder = {
+    "x",
+    "y",
+    "width",
+    "height",
+    "mass",
+    "tiletype",
+    "enableFlag",
+    "disableFlag",
+    "lockX",
+    "lockY"
+}
+
 function floatingBlock.placements()
     return {
         name = "default",
@@ -14,7 +28,9 @@ function floatingBlock.placements()
             height = 8,
             mass = 1.0,
             lockX = false,
-            lockY = false
+            lockY = false,
+            enableFlag = "",
+            disableFlag = ""
         }
     }
 end

@@ -79,6 +79,12 @@ entities.WindHelper/FloatingBlock.attributes.description.lockX=Whether or not th
 entities.WindHelper/FloatingBlock.attributes.name.lockY=Lock Y
 entities.WindHelper/FloatingBlock.attributes.description.lockY=Whether or not the block can move on the Y axis.
 
+entities.WindHelper/FloatingBlock.attributes.name.enableFlag=Enable Flag
+entities.WindHelper/FloatingBlock.attributes.description.enableFlag=If a flag is defined, the block can only move if the flag is set to true.
+
+entities.WindHelper/FloatingBlock.attributes.name.disableFlag=Disable Flag
+entities.WindHelper/FloatingBlock.attributes.description.disableFlag=If a flag is defined, the block cannot move if the flag is set to true. Is handled after Enable Flag.
+
 # Windblown Spinner
 
 entities.WindHelper/FloatingSpinner.placements.name.default=Windblown Spinner
@@ -92,6 +98,12 @@ entities.WindHelper/FloatingSpinner.attributes.description.lockX=Whether or not 
 
 entities.WindHelper/FloatingSpinner.attributes.name.lockY=Lock Y
 entities.WindHelper/FloatingSpinner.attributes.description.lockY=Whether or not the spinner can move on the Y axis.
+
+entities.WindHelper/FloatingSpinner.attributes.name.enableFlag=Enable Flag
+entities.WindHelper/FloatingSpinner.attributes.description.enableFlag=If a flag is defined, the spinner can only move if the flag is set to true.
+
+entities.WindHelper/FloatingSpinner.attributes.name.disableFlag=Disable Flag
+entities.WindHelper/FloatingSpinner.attributes.description.disableFlag=If a flag is defined, the spinner cannot move if the flag is set to true. Is handled after Enable Flag.
 
 # --- Triggers ---
 
