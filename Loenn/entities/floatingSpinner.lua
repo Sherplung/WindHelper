@@ -8,13 +8,26 @@ local floatingSpinner = {}
 floatingSpinner.name = "WindHelper/FloatingSpinner"
 floatingSpinner.texture = "Sherplung/WindHelper/FloatingSpinner/fg_FloatingSpinner00"
 floatingSpinner.depth = 0
+
+floatingSpinner.fieldOrder = {
+    "x",
+    "y",
+    "mass",
+    "enableFlag",
+    "disableFlag",
+    "lockX",
+    "lockY"
+}
+
 floatingSpinner.placements = {
   {
     name = "default",
     data = {
       mass = 1.0,
       lockX = false,
-      lockY = false
+      lockY = false,
+      enableFlag = "",
+      disableFlag = ""
     }
   }
 }

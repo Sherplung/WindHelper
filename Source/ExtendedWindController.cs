@@ -33,11 +33,15 @@ public class ExtendedWindController : WindController
 
     private Vector2 additivePermaWind;
 
+    private Vector2 customPatternWind;
+
     private Vector2 heldDirection;
 
     private Vector2 totalAddedWind;
 
     private Coroutine windCoroutine;
+
+    private Coroutine customPatternCoroutine;
 
     private bool fastEasing;
 
@@ -106,6 +110,38 @@ public class ExtendedWindController : WindController
         }
     }
 
+    public void AddCustomWindPattern(string code)
+    {
+        string[] commands = code.Split(':');
+        float[,] values = new float[commands.Length, 3];
+        for (int i = 0; i < commands.Length; i++)
+        {
+            string[] indivCmd = commands[i].Split(",");
+            values[i,0] = float.Parse(indivCmd[0].Trim(',').Trim(':'));
+            values[i,1] = float.Parse(indivCmd[1].Trim(',').Trim(':'));
+            values[i,2] = float.Parse(indivCmd[2].Trim(',').Trim(':'));
+        }
+        if (customPatternCoroutine != null)
+        {
+            Remove(customPatternCoroutine);
+            customPatternCoroutine = null;
+        }
+        Add(customPatternCoroutine = new Coroutine(CustomWindPattern(values)));
+    }
+
+    private IEnumerator CustomWindPattern(float[,] values)
+    {
+        while (true)
+        {
+            for (int i = 0; i < values.GetLength(0); i++)
+            {
+                customPatternWind.X = values[i, 0];
+                customPatternWind.Y = values[i, 1];
+                yield return values[i, 2];
+            }
+        }
+    }
+
     [MonoModLinkTo("Monocle.Entity", "System.Void Update()")]
     public void base_Update()
     {
@@ -151,7 +187,7 @@ public class ExtendedWindController : WindController
             controllableWindCount = 0;
         }
         // additive wind easing type selector
-        totalAddedWind = controllableWind + additiveWind + additivePermaWind;
+        totalAddedWind = controllableWind + additiveWind + additivePermaWind + customPatternWind;
         switch (WindHelperModule.Settings.AdditiveWindEasing)
         {
             case WindHelperModuleSettings.EasingTypes.EaseSlowToZero:
