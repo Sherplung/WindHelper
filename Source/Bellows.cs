@@ -140,10 +140,20 @@ internal class Bellows : Spring
             windController = new ExtendedWindController(Pattern);
             base.Scene.Add(windController);
         }
+
         if (player.StateMachine.State == 9 || !playerCanUse)
         {
             return;
         }
+
+        if (WindHelperModule.communalHelperLoaded)
+        {
+            if (CommunalHelperIntegration.GetDreamTunnelDashState?.Invoke() is { } dreamTunnelState && player.StateMachine.State == dreamTunnelState)
+            {
+                return;
+            }
+        }
+
         if (Orientation == Orientations.Floor)
         {
             if (player.Speed.Y >= 0f)

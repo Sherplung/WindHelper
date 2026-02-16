@@ -204,6 +204,18 @@ public class ExtendedWindController : WindController
         {
             return;
         }
+        //crystalline helper overlap protection
+        if (WindHelperModule.crystallineHelperLoaded)
+        {
+            if (base.Scene.Tracker.Entities[WindHelperModule.CrystallineWindController] != null)
+            {
+                foreach (WindMover component in base.Scene.Tracker.GetComponents<WindMover>())
+                {
+                    component.Move(incrementerAdditive * 0.1f * Engine.DeltaTime);
+                }
+                return;
+            }
+        }
         foreach (WindMover component in base.Scene.Tracker.GetComponents<WindMover>())
         {
             component.Move(level.Wind * 0.1f * Engine.DeltaTime);

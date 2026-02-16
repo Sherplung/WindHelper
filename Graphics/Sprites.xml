@@ -152,4 +152,19 @@
 		<Loop id="IDD" path="Anemometer" delay="0.033" frames="89,90"/>
 
 	</Sherplung_WindHelper_anemometer>
+
+	<Sherplung_WindHelper_windBoosterFG path="Sherplung/WindHelper/WindBooster/" start="idle">
+		<Center/>
+
+		<Loop id="idle" path="WindBoosterFG" delay="0.067" frames="1-16"/>
+		
+	</Sherplung_WindHelper_windBoosterFG>
+
+	<Sherplung_WindHelper_windBoosterBG path="Sherplung/WindHelper/WindBooster/" start="idle">
+		<Center/>
+
+		<Loop id="idle" path="WindBoosterBG" delay="0.067" frames="1-16"/>
+
+	</Sherplung_WindHelper_windBoosterBG>
+	
 </Sprites>

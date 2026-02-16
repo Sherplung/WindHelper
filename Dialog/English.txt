@@ -90,13 +90,14 @@ Like Floaty Space Blocks, any static mover can be attached to a Windblown Block.
 Additionally, Windblown Blocks have a "mass" parameter that affects the speed at which they are moved by wind.
 A Windblown Block of mass 2 will be pushed half as much as a Windblown Block of mass 1, and one of mass 0.5 twice as much as one of mass 1.
 Windblown Blocks can also be configured to prevent their movement on either the X or Y axis to make their movement more predictable in large rooms.
+They can also have their movement enabled or disabled by specified flags, if desired.
 
 SHERPLUNG_WINDHELPER_DEMO_FLOATINGSPINNER_SIGN=
 This is the Windblown Spinner.
 It's like the Windblown Block, except it's a spinner.
 Windblown Spinners also have a mass value that affects how they are moved by wind, just like Windblown Blocks.
-Their movement can be axis locked as well.
-Only Windblown Spinners of identical mass and axis lock parameters will have spinner juice form between them.
+Their movement can be axis locked and managed by flags as well.
+Only Windblown Spinners of identical parameters will have spinner juice form between them.
 
 SHERPLUNG_WINDHELPER_DEMO_CONTROLLABLEWIND_SIGN=
 Finally, we have the Controllable Wind Trigger.

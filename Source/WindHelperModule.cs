@@ -1,13 +1,22 @@
-﻿using System;
-using System.Linq;
-using Celeste.Mod.WindHelper.Entities;
+﻿using Celeste.Mod.WindHelper.Entities;
 using Monocle;
+using MonoMod.ModInterop;
+using System;
+using System.Linq;
+using System.Reflection;
 using static Celeste.WindController;
 
 namespace Celeste.Mod.WindHelper;
 
 public class WindHelperModule : EverestModule {
     public static WindHelperModule Instance { get; private set; }
+
+    //compatibility dependencies
+    public static bool communalHelperLoaded;
+
+    public static bool crystallineHelperLoaded;
+
+    public static Type CrystallineWindController;
 
     public override Type SettingsType => typeof(WindHelperModuleSettings);
     public static WindHelperModuleSettings Settings => (WindHelperModuleSettings) Instance._Settings;
@@ -30,6 +39,30 @@ public class WindHelperModule : EverestModule {
     }
 
     public override void Load() {
+        //compatibility
+        EverestModuleMetadata communalHelper = new()
+        {
+            Name = "CommunalHelper",
+            Version = new Version(1, 24, 4)
+        };
+        communalHelperLoaded = Everest.Loader.DependencyLoaded(communalHelper);
+
+        EverestModuleMetadata crystallineHelper = new()
+        {
+            Name = "CrystallineHelper",
+            Version = new Version(1, 17, 1)
+        };
+        crystallineHelperLoaded = Everest.Loader.DependencyLoaded(crystallineHelper);
+
+        typeof(CommunalHelperIntegration).ModInterop();
+
+        if (Everest.Loader.TryGetDependency(crystallineHelper, out EverestModule crystallineModule)) {
+            Assembly crystallineAssembly = crystallineModule.GetType().Assembly;
+            CrystallineWindController = crystallineAssembly.GetType("vitmod.CustomWindController");
+            Logger.Log("WindHelper", "Assigned Crystalline Wind Controller reference");
+        }
+
+        //method patches
         Everest.Events.Level.OnLoadLevel += LoadCustomWindController;
 
     }
