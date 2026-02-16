@@ -41,6 +41,10 @@ internal class FloatingBlock : Solid
 
     private bool lockY;
 
+    private string enableFlag;
+
+    private string disableFlag;
+
     private Level level;
 
     public bool HasGroup { get; private set; }
@@ -58,6 +62,8 @@ internal class FloatingBlock : Solid
         Mass = data.Float("mass", 1f);
         lockX = data.Bool("lockX", false);
         lockY = data.Bool("lockY", false);
+        enableFlag = data.Attr("enableFlag", null);
+        disableFlag = data.Attr("disableFlag", null);
     }
 
     public override void Awake(Scene scene)
@@ -244,13 +250,19 @@ internal class FloatingBlock : Solid
     private void Move(Vector2 strength)
     {
         Vector2 origpos = this.Position;
-        if (!lockX)
+        if (string.IsNullOrEmpty(enableFlag) || level.Session.GetFlag(enableFlag))
         {
-            this.MoveHCollideSolidsAndBounds(level, strength.X / Mass, false);
-        }
-        if (!lockY)
-        {
-            this.MoveVCollideSolidsAndBounds(level, strength.Y / Mass, false, checkBottom: true);
+            if (string.IsNullOrEmpty(disableFlag) || !level.Session.GetFlag(disableFlag))
+            {
+                if (!lockX)
+                {
+                    this.MoveHCollideSolidsAndBounds(level, strength.X / Mass, false);
+                }
+                if (!lockY)
+                {
+                    this.MoveVCollideSolidsAndBounds(level, strength.Y / Mass, false, checkBottom: true);
+                }
+            }
         }
         Vector2 newpos = this.Position;
         //if(MasterOfGroup)

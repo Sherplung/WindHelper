@@ -84,6 +84,12 @@ internal class FloatingSpinner : Entity
 
     public bool lockY;
 
+    public string enableFlag;
+
+    public string disableFlag;
+
+    private Level level;
+
     public FloatingSpinner(EntityData data, Vector2 offset)
         : base(data.Position + offset)
     {
@@ -98,6 +104,8 @@ internal class FloatingSpinner : Entity
         randomSeed = Calc.Random.Next();
         lockX = data.Bool("lockX", false);
         lockY = data.Bool("lockY", false);
+        enableFlag = data.Attr("enableFlag", "");
+        disableFlag = data.Attr("disableFlag", "");
     }
 
     public float GetMass()
@@ -108,6 +116,7 @@ internal class FloatingSpinner : Entity
     public override void Awake(Scene scene)
     {
         base.Awake(scene);
+        level = SceneAs<Level>();
         ForceInstantiate();
     }
     public void ForceInstantiate()
@@ -189,7 +198,7 @@ internal class FloatingSpinner : Entity
         }
         foreach (FloatingSpinner entity in base.Scene.Tracker.GetEntities<FloatingSpinner>())
         {
-            if (entity.ID > ID && entity.Mass == Mass && entity.lockX == lockX && entity.lockY == lockY && (entity.Position - Position).LengthSquared() < 576f)
+            if (entity.ID > ID && entity.Mass == Mass && entity.lockX == lockX && entity.lockY == lockY && entity.enableFlag.Equals(enableFlag) && entity.disableFlag.Equals(disableFlag) && (entity.Position - Position).LengthSquared() < 576f)
             {
                 AddSprite((Position + entity.Position) / 2f - Position);
             }
@@ -270,26 +279,19 @@ internal class FloatingSpinner : Entity
 
     private void Move(Vector2 strength)
     {
-        if (!lockX)
+        if (string.IsNullOrEmpty(enableFlag) || level.Session.GetFlag(enableFlag))
         {
-            base.Position.X += strength.X / Mass;
-        }
-        if (!lockY)
-        {
-            base.Position.Y += strength.Y / Mass;
-        }
-        /*
-        if (filler == null)
-        {
-            return;
-        }
-        foreach (Component component2 in filler.Components)
-        {
-            if (component2 is Image image2)
+            if (string.IsNullOrEmpty(disableFlag) || !level.Session.GetFlag(disableFlag))
             {
-                image2.Position += strength / Mass;
+                if (!lockX)
+                {
+                    base.Position.X += strength.X / Mass;
+                }
+                if (!lockY)
+                {
+                    base.Position.Y += strength.Y / Mass;
+                }
             }
         }
-        */
     }
 }
