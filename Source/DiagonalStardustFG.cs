@@ -1,6 +1,7 @@
 ﻿using Celeste;
 using Celeste.Mod.Backdrops;
 using Celeste.Mod.Entities;
+using Celeste.Mod.WindHelper.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
@@ -8,12 +9,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Celeste.WindController;
 
 namespace Celeste.Mod.WindHelper.Stylegrounds;
 [CustomBackdrop("WindHelper/DiagonalStardustFG")]
 
 public class DiagonalStardustFG : Backdrop
 {
+    public WindController.Patterns Pattern;
+
     private struct Particle
     {
         public Vector2 Position;
@@ -32,6 +36,8 @@ public class DiagonalStardustFG : Backdrop
 
         public int Color;
     }
+
+    private Vector2 feltWind;
 
     private static Color[] colors;
 
@@ -72,7 +78,27 @@ public class DiagonalStardustFG : Backdrop
     {
         base.Update(scene);
         Level level = scene as Level;
-        scale.X = Math.Max(1f, Math.Abs(level.Wind.Length()) / 100f);
+
+        feltWind = level.Wind;
+        ExtendedWindController windController = scene.Entities.FindFirst<ExtendedWindController>();
+        if (windController == null)
+        {
+            windController = new ExtendedWindController(Pattern);
+            scene.Add(windController);
+        }
+        if (WindHelperModule.crystallineHelperLoaded)
+        {
+            if (scene.Tracker.Entities[WindHelperModule.CrystallineWindController].Count > 0)
+            {
+                feltWind = level.Wind + windController.GetAdditiveWind();
+            }
+            else
+            {
+                feltWind = level.Wind;
+            }
+        }
+
+        scale.X = Math.Max(1f, Math.Abs(feltWind.Length()) / 100f);
         scale.Y = 1f;
         for (int i = 0; i < particles.Length; i++)
         {
@@ -81,9 +107,9 @@ public class DiagonalStardustFG : Backdrop
                 Reset(i, 0f);
             }
             particles[i].Percent += Engine.DeltaTime / particles[i].Duration;
-            particles[i].Position += (particles[i].Direction * particles[i].Speed + level.Wind) * Engine.DeltaTime;
+            particles[i].Position += (particles[i].Direction * particles[i].Speed + feltWind) * Engine.DeltaTime;
             particles[i].Direction.Rotate(particles[i].Spin * Engine.DeltaTime);
-            particles[i].Angle = level.Wind.SafeNormalize(ifZero : Vector2.UnitX);
+            particles[i].Angle = feltWind.SafeNormalize(ifZero : Vector2.UnitX);
         }
         fade = Calc.Approach(fade, Visible ? 1f : 0f, Engine.DeltaTime);
     }

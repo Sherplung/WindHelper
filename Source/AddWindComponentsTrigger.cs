@@ -58,6 +58,7 @@ internal class AddWindComponentsTrigger : Trigger
             {
                 windController = new ExtendedWindController(Pattern);
                 base.Scene.Add(windController);
+                Logger.Debug(nameof(WindHelperModule) + "/AddWindComponentsTrigger", "ExtendedWindControllers present: " + base.Scene.Tracker.Entities[WindHelperModule.CrystallineWindController].Count);
             }
             switch (behavior)
             {

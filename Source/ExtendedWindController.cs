@@ -1,21 +1,23 @@
-﻿using System;
+﻿using Celeste;
+using Celeste.Mod.Entities;
+using Celeste.Mod.WindHelper;
+using IL.Celeste.Mod.Registry.DecalRegistryHandlers;
+using IL.MonoMod;
+using Microsoft.Xna.Framework;
+using Monocle;
+using MonoMod;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using Celeste;
-using IL.Celeste.Mod.Registry.DecalRegistryHandlers;
-using Monocle;
-using MonoMod;
-using System.Collections;
-using Celeste.Mod.WindHelper;
-using IL.MonoMod;
 
 namespace Celeste.Mod.WindHelper.Entities;
 
+[Tracked]
 public class ExtendedWindController : WindController
 {
 
@@ -52,6 +54,11 @@ public class ExtendedWindController : WindController
         controllableWindCount = 0;
         controllableWindStrength = 0;
         additivePermaWind = Vector2.Zero;
+    }
+
+    public Vector2 GetAdditiveWind()
+    {
+        return incrementerAdditive;
     }
 
     private void AdditiveSetAmbienceStrength(bool strong)
@@ -243,7 +250,7 @@ public class ExtendedWindController : WindController
         //crystalline helper overlap protection
         if (WindHelperModule.crystallineHelperLoaded)
         {
-            if (base.Scene.Tracker.Entities[WindHelperModule.CrystallineWindController] != null)
+            if (base.Scene.Tracker.Entities[WindHelperModule.CrystallineWindController].Count > 0)
             {
                 foreach (WindMover component in base.Scene.Tracker.GetComponents<WindMover>())
                 {

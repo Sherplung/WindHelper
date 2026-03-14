@@ -20,6 +20,11 @@ Sherplung_WindHelperMaps_2_pinwheel_test= incoherent test map
 poem_Sherplung_WindHelperMaps_2_pinwheel_test_A=
 wow very impressive
 
+Sherplung_WindHelperMaps_3_windhelper_mod_compatibility_A= mod compatibility test map
+
+poem_Sherplung_WindHelperMaps_3_windhelper_mod_compatibility_A=
+i hope it isn't broken
+
 SHERPLUNG_WINDHELPER_DEMO_START_SIGN=
 Welcome to WindHelper!
 This is a short demonstration map to get you acquainted with what mechanics, entities, and triggers this helper introduces.

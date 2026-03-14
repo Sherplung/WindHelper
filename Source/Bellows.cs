@@ -135,6 +135,7 @@ internal class Bellows : Spring
     private new void OnCollide(Player player)
     {
         ExtendedWindController windController = base.Scene.Entities.FindFirst<ExtendedWindController>();
+
         if (windController == null)
         {
             windController = new ExtendedWindController(Pattern);

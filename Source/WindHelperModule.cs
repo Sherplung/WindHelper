@@ -31,7 +31,7 @@ public class WindHelperModule : EverestModule {
         Instance = this;
 #if DEBUG
         // debug builds use verbose logging
-        Logger.SetLogLevel(nameof(WindHelperModule), LogLevel.Verbose);
+        Logger.SetLogLevel(nameof(WindHelperModule), LogLevel.Debug);
 #else
         // release builds use info logging to reduce spam in log files
         Logger.SetLogLevel(nameof(WindHelperModule), LogLevel.Info);
@@ -54,12 +54,9 @@ public class WindHelperModule : EverestModule {
         };
         crystallineHelperLoaded = Everest.Loader.DependencyLoaded(crystallineHelper);
 
-        typeof(CommunalHelperIntegration).ModInterop();
-
         if (Everest.Loader.TryGetDependency(crystallineHelper, out EverestModule crystallineModule)) {
             Assembly crystallineAssembly = crystallineModule.GetType().Assembly;
             CrystallineWindController = crystallineAssembly.GetType("vitmod.CustomWindController");
-            Logger.Log("WindHelper", "Assigned Crystalline Wind Controller reference");
         }
 
         //method patches
@@ -71,6 +68,31 @@ public class WindHelperModule : EverestModule {
         Everest.Events.Level.OnLoadLevel -= LoadCustomWindController;
 
     }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        EverestModuleMetadata communalHelper = new()
+        {
+            Name = "CommunalHelper",
+            Version = new Version(1, 24, 4)
+        };
+        communalHelperLoaded = Everest.Loader.DependencyLoaded(communalHelper);
+        EverestModuleMetadata crystallineHelper = new()
+        {
+            Name = "CrystallineHelper",
+            Version = new Version(1, 17, 1)
+        };
+        crystallineHelperLoaded = Everest.Loader.DependencyLoaded(crystallineHelper);
+        typeof(CommunalHelperIntegration).ModInterop();
+        if (Everest.Loader.TryGetDependency(crystallineHelper, out EverestModule crystallineModule))
+        {
+            Assembly crystallineAssembly = crystallineModule.GetType().Assembly;
+            CrystallineWindController = crystallineAssembly.GetType("vitmod.CustomWindController");
+        }
+    }
+
     private void LoadCustomWindController(Level level, Player.IntroTypes playerIntro, bool isFromLoader)
     {
         level.Entities.FindFirst<WindController>()?.RemoveSelf();

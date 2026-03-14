@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using Celeste;
+﻿using Celeste;
+using Celeste.Mod.Backdrops;
+using Celeste.Mod.WindHelper.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
-using Celeste.Mod.Backdrops;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using static Celeste.WindController;
 
 
 
@@ -17,7 +19,11 @@ internal class DiagonalWindSnowFG : Backdrop
 {
     public Vector2 CameraOffset = Vector2.Zero;
 
+    private Vector2 feltWind;
+
     public float Alpha = 1f;
+
+    public WindController.Patterns Pattern;
 
     private Vector2[] positions;
 
@@ -57,14 +63,35 @@ internal class DiagonalWindSnowFG : Backdrop
         visibleFade = Calc.Approach(visibleFade, IsVisible(scene as Level) ? 1 : 0, Engine.DeltaTime * 2f);
         Level level = scene as Level;
         SineWave[] array = sines;
+
+        feltWind = level.Wind;
+        ExtendedWindController windController = scene.Entities.FindFirst<ExtendedWindController>();
+        /*
+        if (windController == null)
+        {
+            windController = new ExtendedWindController(Pattern);
+            scene.Add(windController);
+        }
+        if (WindHelperModule.crystallineHelperLoaded)
+        {
+            if (scene.Tracker.Entities[WindHelperModule.CrystallineWindController].Count > 0)
+            {
+                feltWind = level.Wind + windController.GetAdditiveWind();
+            } 
+            else
+            {
+                feltWind = level.Wind;
+            }
+        }
+        */
         for (int i = 0; i < array.Length; i++)
         {
             array[i].Update();
         }
-        if (level.Wind != Vector2.Zero)
+        if (feltWind != Vector2.Zero)
         {
-            float magnitude = level.Wind.Length();
-            rotation = level.Wind.Angle();
+            float magnitude = feltWind.Length();
+            rotation = feltWind.Angle();
             //scale.X = Math.Max(1f, Math.Abs(level.Wind.X) / 100f);
             scale.X = Math.Max(1f, magnitude / 100f);
             //scale.Y = 1f / Math.Max(1f, Math.Abs(level.Wind.Y) / 100f);
@@ -79,13 +106,13 @@ internal class DiagonalWindSnowFG : Backdrop
         {
             float value = sines[j % sines.Length].Value;
             Vector2 zero = Vector2.Zero;
-            if (level.Wind != Vector2.Zero)
+            if (feltWind != Vector2.Zero)
             {
-                zero = (new Vector2(level.Wind.X + value * 10f, level.Wind.Y + value * 10f));
+                zero = (new Vector2(feltWind.X + value * 10f, feltWind.Y + value * 10f));
             }
             else
             {
-                zero = (new Vector2(level.Wind.X + value * 10f, level.Wind.Y + (3f + value) * 10f));
+                zero = (new Vector2(feltWind.X + value * 10f, feltWind.Y + (3f + value) * 10f));
             }
             positions[j] += zero * Engine.DeltaTime;
         }
