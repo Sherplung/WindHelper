@@ -116,6 +116,10 @@ entities.WindHelper/FloatingSpinner.placements.description.red=Booster that gran
 entities.WindHelper/WindBooster.attributes.name.windStrength=Wind Strength
 entities.WindHelper/WindBooster.attributes.description.windStrength=Strength of the Controllable Wind granted by the Booster.
 
+entities.WindHelper/WindBooster.attributes.description.dashBased=Whether the wind is contolled based on player input while inside the Booster, or a set timer after leaving it, based on dash direction.
+
+entities.WindHelper/WindBooster.attributes.description.windDuration=Duration of the wind gust created by the Booster. Only relevant if "Dash Based" is true.
+
 # --- Triggers ---
 
 # Add Wind Components Trigger
