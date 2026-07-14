@@ -61,12 +61,13 @@ public class WindHelperModule : EverestModule {
 
         //method patches
         Everest.Events.Level.OnLoadLevel += LoadCustomWindController;
-
+        //hook
+        WindBooster.Load();
     }
 
     public override void Unload() {
         Everest.Events.Level.OnLoadLevel -= LoadCustomWindController;
-
+        WindBooster.Unload();
     }
 
     public override void Initialize()
