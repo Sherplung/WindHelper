@@ -51,9 +51,28 @@ public class ExtendedWindController : WindController
         : base(pattern)
     {
         additiveWind = Vector2.Zero;
+        incrementerAdditive = Vector2.Zero;
+        incrementerPattern = Vector2.Zero;
         controllableWindCount = 0;
         controllableWindStrength = 0;
         additivePermaWind = Vector2.Zero;
+        customPatternWind = Vector2.Zero;
+        totalAddedWind = Vector2.Zero;
+
+        TransitionListener listener;
+        Add(listener = new TransitionListener());
+        listener.OnOutBegin = () =>
+        {
+            this.Components.RemoveAll<Coroutine>();
+            additiveWind = Vector2.Zero;
+            incrementerAdditive = Vector2.Zero;
+            incrementerPattern = Vector2.Zero;
+            controllableWindCount = 0;
+            controllableWindStrength = 0;
+            additivePermaWind = Vector2.Zero;
+            customPatternWind = Vector2.Zero;
+            totalAddedWind = Vector2.Zero;
+        };
     }
 
     public Vector2 GetAdditiveWind()
