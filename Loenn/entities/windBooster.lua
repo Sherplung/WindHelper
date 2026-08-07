@@ -10,7 +10,8 @@ windBooster.placements = {
             windStrength = 1200.0,
             dashBased = false,
             windDuration = 1.0,
-            ch9_hub_booster = false
+            ch9_hub_booster = false,
+			oneUse = false
         }
     },
     {
@@ -20,7 +21,8 @@ windBooster.placements = {
             windStrength = 1200.0,
             dashBased = false,
             windDuration = 1.0,
-            ch9_hub_booster = false
+            ch9_hub_booster = false,
+			oneUse = false
         }
     }
 }

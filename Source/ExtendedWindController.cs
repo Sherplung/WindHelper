@@ -199,9 +199,7 @@ public class ExtendedWindController : WindController
             }
         }
         // handling controllable wind
-        heldDirection.X = Input.MoveX;
-        heldDirection.Y = Input.MoveY;
-        heldDirection = heldDirection.SafeNormalize(ifZero : Vector2.Zero);
+        heldDirection = CorrectDashPrecision(Input.GetAimVector().SafeNormalize(ifZero : Vector2.Zero));
         if (controllableWindCount > 0)
         {
             controllableWind = heldDirection * controllableWindStrength;
@@ -282,5 +280,24 @@ public class ExtendedWindController : WindController
         {
             component.Move(level.Wind * 0.1f * Engine.DeltaTime);
         }
+    }
+
+    // A copy of the function of the same name from Celeste.Player
+    // Copied because otherwise we'd have to get the player every frame just to use it
+    // Also we're using this so that Controller maintains parity with Keyboard
+    // If we don't, it's possible to angle the stick so that the direction you exit a bubble and the direction the wind blows end up entirely different
+    private static Vector2 CorrectDashPrecision(Vector2 dir)
+    {
+        if (dir.X != 0.0 && Math.Abs(dir.X) < 1.0 / 1000.0)
+        {
+            dir.X = 0.0f;
+            dir.Y = Math.Sign(dir.Y);
+        }
+        else if (dir.Y != 0.0 && Math.Abs(dir.Y) < 1.0 / 1000.0)
+        {
+            dir.Y = 0.0f;
+            dir.X = Math.Sign(dir.X);
+        }
+        return dir;
     }
 }
