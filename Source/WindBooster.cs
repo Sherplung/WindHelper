@@ -25,6 +25,8 @@ internal class WindBooster : Booster
     private bool dashBased;
 
     private float windDuration;
+    
+    private bool OneUse;
 
     private Sprite spriteFG;
 
@@ -42,6 +44,7 @@ internal class WindBooster : Booster
         windStrength = data.Float("windStrength", 400f);
         dashBased = data.Bool("dashBased", false);
         windDuration = data.Float("windDuration", 1f);
+        OneUse = data.Bool("oneUse", false);
         Remove(sprite);
         Add(spriteBG = GFX.SpriteBank.Create("Sherplung_WindHelper_windBoosterBG"));
         Add(sprite = GFX.SpriteBank.Create(red ? "boosterRed" : "booster"));
@@ -77,15 +80,6 @@ internal class WindBooster : Booster
     public override void Added(Scene scene)
     {
         base.Added(scene);
-        Image image = new Image(GFX.Game["objects/booster/outline"]);
-        image.CenterOrigin();
-        image.Color = Color.White * 0.75f;
-        outline = new Entity(Position);
-        outline.Depth = 8999;
-        outline.Visible = false;
-        outline.Add(image);
-        outline.Add(new MirrorReflection());
-        scene.Add(outline);
         level = SceneAs<Level>();
     }
 
@@ -151,6 +145,13 @@ internal class WindBooster : Booster
 
     public override void Update()
     {
+        if (BoostingPlayer && OneUse)
+        {
+            outline.RemoveSelf();
+            Remove(light);
+            Remove(bloom);
+        }
+        
         base_Update();
         if (cannotUseTimer > 0f)
         {
@@ -161,7 +162,14 @@ internal class WindBooster : Booster
             respawnTimer -= Engine.DeltaTime;
             if (respawnTimer <= 0f)
             {
-                Respawn();
+                if (OneUse)
+                {
+                    RemoveSelf();
+                }
+                else
+                {
+                    Respawn();
+                }
             }
         }
         if (!dashRoutine.Active && respawnTimer <= 0f)
@@ -214,6 +222,5 @@ internal class WindBooster : Booster
             spriteFG.Visible = false;
             spriteBG.Visible = false;
         }
-        
     }
 }
