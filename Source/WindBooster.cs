@@ -1,9 +1,16 @@
-﻿using Celeste.Mod.Entities;
+﻿using Celeste;
+using Celeste.Editor;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using MonoMod;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using static Celeste.WindController;
 
 namespace Celeste.Mod.WindHelper.Entities;
@@ -13,32 +20,58 @@ namespace Celeste.Mod.WindHelper.Entities;
 internal class WindBooster : Booster 
 {
 
-    private readonly float windStrength;
+    private float windStrength;
 
-    private readonly Sprite spriteFG;
+    private bool dashBased;
 
-    private readonly Sprite spriteBG;
+    private float windDuration;
 
-    public Patterns Pattern;
+    private Sprite spriteFG;
 
-    private bool wasBoosting;
+    private Sprite spriteBG;
 
-    private readonly bool DisableRedirecting;
+    public WindController.Patterns Pattern;
 
-    private Vector2 BoostDirection;
+    private Level level;
 
-    private readonly bool OneUse;
+    private bool wasBoosting = false;
 
     public WindBooster(EntityData data, Vector2 offset)
-        : base(data.Position + offset, data.Bool("red"))
+        : base(data.Position + offset, data.Bool("red", false))
     {
         windStrength = data.Float("windStrength", 400f);
-        DisableRedirecting = data.Bool("disableRedirecting");
-        OneUse = data.Bool("oneUse");
+        dashBased = data.Bool("dashBased", false);
+        windDuration = data.Float("windDuration", 1f);
         Remove(sprite);
         Add(spriteBG = GFX.SpriteBank.Create("Sherplung_WindHelper_windBoosterBG"));
         Add(sprite = GFX.SpriteBank.Create(red ? "boosterRed" : "booster"));
         Add(spriteFG = GFX.SpriteBank.Create("Sherplung_WindHelper_windBoosterFG"));
+    }
+
+    public static void Load()
+    {
+        On.Celeste.Booster.PlayerBoosted += BoostedHook;
+    }
+
+    public static void Unload()
+    {
+        On.Celeste.Booster.PlayerBoosted -= BoostedHook;
+    }
+
+    private static void BoostedHook(On.Celeste.Booster.orig_PlayerBoosted orig, Booster self, Player player, Vector2 direction)
+    {
+        orig(self, player, direction);
+        if (self is WindBooster windbooster && windbooster.dashBased)
+        {
+            ExtendedWindController windController = self.Scene.Entities.FindFirst<ExtendedWindController>();
+            if (windController == null)
+            {
+                windController = new ExtendedWindController(windbooster.Pattern);
+                self.Scene.Add(windController);
+            }
+            windController.AddWind(direction * windbooster.windStrength, windbooster.windDuration);
+            Logger.Debug($"{nameof(WindHelperModule)}/{nameof(WindBooster)}", $"{direction.X}");
+        }
     }
 
     public override void Added(Scene scene)
@@ -47,14 +80,13 @@ internal class WindBooster : Booster
         Image image = new Image(GFX.Game["objects/booster/outline"]);
         image.CenterOrigin();
         image.Color = Color.White * 0.75f;
-        outline = new Entity(Position)
-        {
-            Depth = 8999,
-            Visible = false
-        };
+        outline = new Entity(Position);
+        outline.Depth = 8999;
+        outline.Visible = false;
         outline.Add(image);
         outline.Add(new MirrorReflection());
         scene.Add(outline);
+        level = SceneAs<Level>();
     }
 
     public new void PlayerBoosted(Player player, Vector2 direction)
@@ -68,7 +100,7 @@ internal class WindBooster : Booster
         if (Ch9HubBooster && direction.Y < 0f)
         {
             bool flag = true;
-            List<LockBlock> list = Scene.Entities.FindAll<LockBlock>();
+            List<LockBlock> list = base.Scene.Entities.FindAll<LockBlock>();
             if (list.Count > 0)
             {
                 foreach (LockBlock item in list)
@@ -93,7 +125,7 @@ internal class WindBooster : Booster
             }
         }
         BoostingPlayer = true;
-        Tag = (int)Tags.Persistent | (int)Tags.TransitionUpdate;
+        base.Tag = (int)Tags.Persistent | (int)Tags.TransitionUpdate;
         sprite.Play("spin");
         sprite.FlipX = player.Facing == Facings.Left;
         outline.Visible = true;
@@ -119,13 +151,6 @@ internal class WindBooster : Booster
 
     public override void Update()
     {
-        if (OneUse)
-        {
-            outline.RemoveSelf();
-            Remove(light);
-            Remove(bloom);
-        }
-
         base_Update();
         if (cannotUseTimer > 0f)
         {
@@ -136,20 +161,13 @@ internal class WindBooster : Booster
             respawnTimer -= Engine.DeltaTime;
             if (respawnTimer <= 0f)
             {
-                if (OneUse)
-                {
-                    RemoveSelf();
-                }
-                else
-                {
-                    Respawn();
-                }
+                Respawn();
             }
         }
         if (!dashRoutine.Active && respawnTimer <= 0f)
         {
             Vector2 target = Vector2.Zero;
-            Player entity = Scene.Tracker.GetEntity<Player>();
+            Player entity = base.Scene.Tracker.GetEntity<Player>();
             if (entity != null && CollideCheck(entity))
             {
                 target = entity.Center + playerOffset - Position;
@@ -160,56 +178,30 @@ internal class WindBooster : Booster
         {
             sprite.Play("loop");
         }
-        if (BoostingPlayer && !wasBoosting)
+        if (!dashBased)
         {
-            ExtendedWindController windController = Scene.Entities.FindFirst<ExtendedWindController>();
-            if (windController == null)
+            if (BoostingPlayer && !wasBoosting)
             {
-                windController = new ExtendedWindController(Pattern);
-                Scene.Add(windController);
-            }
-
-            if (!DisableRedirecting)
-            {
-                windController.ChangeControllableWind(windStrength);
-            }
-            else
-            {
-                Player player  = Scene.Tracker.GetEntity<Player>();
-                BoostDirection = player.CorrectDashPrecision(Input.GetAimVector().SafeNormalize());
-                
-                switch (red)
+                ExtendedWindController windController = base.Scene.Entities.FindFirst<ExtendedWindController>();
+                if (windController == null)
                 {
-                    case true:
-                        windController.AddPermaWind(BoostDirection * windStrength);
-                        break;
-                    default:
-                        windController.AddWind(BoostDirection * windStrength, 0.15f);
-                        break;
+                    windController = new ExtendedWindController(Pattern);
+                    base.Scene.Add(windController);
                 }
+                windController.ChangeControllableWind(windStrength, true);
             }
-
-        }
-        else if (!BoostingPlayer && wasBoosting)
-        {
-            ExtendedWindController windController = Scene.Entities.FindFirst<ExtendedWindController>();
-            if (windController == null)
+            else if (!BoostingPlayer && wasBoosting)
             {
-                windController = new ExtendedWindController(Pattern);
-                Scene.Add(windController);
-            }
-            
-            if (!DisableRedirecting)
-            {
+                ExtendedWindController windController = base.Scene.Entities.FindFirst<ExtendedWindController>();
+                if (windController == null)
+                {
+                    windController = new ExtendedWindController(Pattern);
+                    base.Scene.Add(windController);
+                }
                 windController.ChangeControllableWind(windStrength, false);
             }
-            else if (red)
-            {
-                windController.AddPermaWind(-BoostDirection * windStrength);
-            }
-
+            wasBoosting = BoostingPlayer;
         }
-        wasBoosting = BoostingPlayer;
         spriteFG.Position = sprite.Position;
         spriteBG.Position = sprite.Position;
         if (sprite.currentAnimation == sprite.animations["loop"] || sprite.currentAnimation == sprite.animations["spin"] || sprite.currentAnimation == sprite.animations["inside"])

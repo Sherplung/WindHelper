@@ -85,26 +85,6 @@ entities.WindHelper/FloatingBlock.attributes.description.enableFlag=If a flag is
 entities.WindHelper/FloatingBlock.attributes.name.disableFlag=Disable Flag
 entities.WindHelper/FloatingBlock.attributes.description.disableFlag=If a flag is defined, the block cannot move if the flag is set to true. Is handled after Enable Flag.
 
-# Windblown Dash Block
-
-entities.WindHelper/FloatingDashBlock.placements.name.floating_dash_block=Windblown Dash Block
-entities.WindHelper/FloatingDashBlock.placements.description.floating_dash_block=Dash block that is moved by wind.
-
-entities.WindHelper/FloatingDashBlock.attributes.name.mass=Mass
-entities.WindHelper/FloatingDashBlock.attributes.description.mass=Inversely proportional to how much the block is moved by wind. Can be negative.
-
-entities.WindHelper/FloatingDashBlock.attributes.name.lockX=Lock X
-entities.WindHelper/FloatingDashBlock.attributes.description.lockX=Whether or not the block can move on the X axis.
-
-entities.WindHelper/FloatingDashBlock.attributes.name.lockY=Lock Y
-entities.WindHelper/FloatingDashBlock.attributes.description.lockY=Whether or not the block can move on the Y axis.
-
-entities.WindHelper/FloatingDashBlock.attributes.name.enableFlag=Enable Flag
-entities.WindHelper/FloatingDashBlock.attributes.description.enableFlag=If a flag is defined, the block can only move if the flag is set to true.
-
-entities.WindHelper/FloatingDashBlock.attributes.name.disableFlag=Disable Flag
-entities.WindHelper/FloatingDashBlock.attributes.description.disableFlag=If a flag is defined, the block cannot move if the flag is set to true. Is handled after Enable Flag.
-
 # Windblown Spinner
 
 entities.WindHelper/FloatingSpinner.placements.name.default=Windblown Spinner
@@ -136,12 +116,9 @@ entities.WindHelper/FloatingSpinner.placements.description.red=Booster that gran
 entities.WindHelper/WindBooster.attributes.name.windStrength=Wind Strength
 entities.WindHelper/WindBooster.attributes.description.windStrength=Strength of the Controllable Wind granted by the Booster.
 
-entities.WindHelper/WindBooster.attributes.name.disableRedirecting=Disable Redirecting
-entities.WindHelper/WindBooster.attributes.description.disableRedirecting=Whether or not the player is allowed to influence the wind after boosting.
+entities.WindHelper/WindBooster.attributes.description.dashBased=Whether the wind is contolled based on player input while inside the Booster, or a set timer after leaving it, based on dash direction.
 
-entities.WindHelper/WindBooster.attributes.name.oneUse=One Use
-entities.WindHelper/WindBooster.attributes.description.oneUse=Makes the booster one use.
-
+entities.WindHelper/WindBooster.attributes.description.windDuration=Duration of the wind gust created by the Booster. Only relevant if "Dash Based" is true.
 
 # --- Triggers ---
 
