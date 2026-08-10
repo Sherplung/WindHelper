@@ -21,7 +21,7 @@ FloatingDashBlock.fieldOrder = {
 
 function FloatingDashBlock.placements()
     return {
-        name = "floating_dash_block",
+        name = "default",
         data = {
             tiletype = fakeTilesHelper.getPlacementMaterial("m"),
             width = 8,

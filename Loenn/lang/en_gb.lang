@@ -10,6 +10,12 @@ entities.WindHelper/Pinwheel.placements.description.weak=Bumper that creates a w
 entities.WindHelper/Pinwheel.placements.name.cardinal=Pinwheel (Cardinal)
 entities.WindHelper/Pinwheel.placements.description.cardinal=Bumper that creates a wind gust in the closest cardinal direction to the direction it is hit.
 
+entities.WindHelper/Pinwheel.placements.name.diagonal=Pinwheel (Diagonal)
+entities.WindHelper/Pinwheel.placements.description.diagonal=Bumper that creates a wind gust in the closest diagonal direction to the direction it is hit.
+
+entities.WindHelper/Pinwheel.placements.name.eightWay=Pinwheel (Eight Way)
+entities.WindHelper/Pinwheel.placements.description.eightWay=Bumper that creates a wind gust in the closest eight way direction to the direction it is hit.
+
 entities.WindHelper/Pinwheel.attributes.name.wind_duration=Duration
 entities.WindHelper/Pinwheel.attributes.description.wind_duration=Duration of the wind gust created by the Pinwheel.
 
@@ -32,6 +38,9 @@ entities.WindHelper/Bellows.placements.description.right=Spring that creates a w
 
 entities.WindHelper/Bellows.placements.name.left=Bellows (Left)
 entities.WindHelper/Bellows.placements.description.left=Spring that creates a wind gust in the direction it faces when hit.
+
+entities.WindHelper/Bellows.placements.name.down=Bellows (Down)
+entities.WindHelper/Bellows.placements.description.down=Spring that creates a wind gust in the direction it faces when hit.
 
 entities.WindHelper/Bellows.attributes.name.orientation=Orientation
 entities.WindHelper/Bellows.attributes.description.orientation=The direction the Bellows face.
@@ -68,7 +77,7 @@ entities.WindHelper/Anemometer.attributes.description.canRefresh=Whether or not 
 # Windblown Block
 
 entities.WindHelper/FloatingBlock.placements.name.default=Windblown Block
-entities.WindHelper/FloatingBlock.placements.description.default=Solid block that is moved by wind.
+entities.WindHelper/FloatingBlock.placements.description.default=A Solid block that is moved by wind.
 
 entities.WindHelper/FloatingBlock.attributes.name.mass=Mass
 entities.WindHelper/FloatingBlock.attributes.description.mass=Inversely proportional to how much the block is moved by wind. Can be negative.
@@ -84,6 +93,26 @@ entities.WindHelper/FloatingBlock.attributes.description.enableFlag=If a flag is
 
 entities.WindHelper/FloatingBlock.attributes.name.disableFlag=Disable Flag
 entities.WindHelper/FloatingBlock.attributes.description.disableFlag=If a flag is defined, the block cannot move if the flag is set to true. Is handled after Enable Flag.
+
+# Windblown Dash Block
+
+entities.WindHelper/FloatingDashBlock.placements.name.default=Windblown Dash Block
+entities.WindHelper/FloatingDashBlock.placements.description.default=A Dash block that is moved by wind.
+
+entities.WindHelper/FloatingDashBlock.attributes.name.mass=Mass
+entities.WindHelper/FloatingDashBlock.attributes.description.mass=Inversely proportional to how much the block is moved by wind. Can be negative.
+
+entities.WindHelper/FloatingDashBlock.attributes.name.lockX=Lock X
+entities.WindHelper/FloatingDashBlock.attributes.description.lockX=Whether or not the block can move on the X axis.
+
+entities.WindHelper/FloatingDashBlock.attributes.name.lockY=Lock Y
+entities.WindHelper/FloatingDashBlock.attributes.description.lockY=Whether or not the block can move on the Y axis.
+
+entities.WindHelper/FloatingDashBlock.attributes.name.enableFlag=Enable Flag
+entities.WindHelper/FloatingDashBlock.attributes.description.enableFlag=If a flag is defined, the block can only move if the flag is set to true.
+
+entities.WindHelper/FloatingDashBlock.attributes.name.disableFlag=Disable Flag
+entities.WindHelper/FloatingDashBlock.attributes.description.disableFlag=If a flag is defined, the block cannot move if the flag is set to true. Is handled after Enable Flag.
 
 # Windblown Spinner
 
@@ -174,6 +203,23 @@ triggers.WindHelper/CustomWindPatternTrigger.attributes.description.instructions
 
 triggers.WindHelper/CustomWindPatternTrigger.attributes.name.onlyOnce=Only Once
 triggers.WindHelper/CustomWindPatternTrigger.attributes.description.onlyOnce=Whether or not the trigger can be activated multiple times.
+
+# Customize Wind Properties Trigger
+
+triggers.WindHelper/CustomizeWindPropertiesTrigger.placements.name.default=Customize Wind Properties
+triggers.WindHelper/CustomizeWindPropertiesTrigger.placements.description.default=Sets fundamenal properties of custom wind.
+
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.name.maxWindSpeed=Max Wind Speed
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.description.maxWindSpeed=The maximum magnitude of the wind speed vector.
+
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.name.easingType=Easing Type
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.description.easingType=The Easing used to start and stop the wind.
+
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.name.additiveWindAmbience=Additive Wind Ambience
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.description.additiveWindAmbience=Whether or not wind makes wind ambience.
+
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.name.oneUse=One Use
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.description.oneUse=Whether or not the trigger can be activated multiple times.
 
 # --- Stylegrounds ---
 

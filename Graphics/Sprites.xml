@@ -31,6 +31,38 @@
 		<Anim id="spinDownFinal" path="RedWhite/PinwheelRedWhite" delay="0.016" frames="11-13,9,10,1" goto="disabled"/>
 	</Sherplung_WindHelper_pinwheelRedWhite>
 
+	<Sherplung_WindHelper_pinwheelGreenWhite path="Sherplung/WindHelper/Pinwheel/" start="idle">
+		<Center/>
+
+		<Loop id="idle" path="GreenWhite/PinwheelGreenWhite" delay="0.033" frames="1*55,2,3,4,5,6*55,7,8,9,10"/>
+
+		<Loop id="spin" path="GreenWhite/PinwheelGreenWhite" delay="0.016" frames="1-10"/>
+
+		<Anim id="fast" path="GreenWhite/PinwheelGreenWhite" delay="0.016" frames="11-14" goto="spin"/>
+
+		<Anim id="spinDown" path="GreenWhite/PinwheelGreenWhite" delay="0.016" frames="11-13,9,10,1" goto="idle"/>
+
+		<Loop id="disabled" path="Gray/PinwheelGray" delay="0.100" frames="1-10"/>
+
+		<Anim id="spinDownFinal" path="GreenWhite/PinwheelGreenWhite" delay="0.016" frames="11-13,9,10,1" goto="disabled"/>
+	</Sherplung_WindHelper_pinwheelGreenWhite>
+
+	<Sherplung_WindHelper_pinwheelRedGreen path="Sherplung/WindHelper/Pinwheel/" start="idle">
+		<Center/>
+
+		<Loop id="idle" path="RedGreen/PinwheelRedGreen" delay="0.033" frames="1*55,2,3,4,5,6*55,7,8,9,10"/>
+
+		<Loop id="spin" path="RedGreen/PinwheelRedGreen" delay="0.016" frames="1-10"/>
+
+		<Anim id="fast" path="RedGreen/PinwheelRedGreen" delay="0.016" frames="11-14" goto="spin"/>
+
+		<Anim id="spinDown" path="RedGreen/PinwheelRedGreen" delay="0.016" frames="11-13,9,10,1" goto="idle"/>
+
+		<Loop id="disabled" path="Gray/PinwheelGray" delay="0.100" frames="1-10"/>
+
+		<Anim id="spinDownFinal" path="RedGreen/PinwheelRedGreen" delay="0.016" frames="11-13,9,10,1" goto="disabled"/>
+	</Sherplung_WindHelper_pinwheelRedGreen>
+
 	<Sherplung_WindHelper_pinwheelGray path="Sherplung/WindHelper/Pinwheel/" start="idle">
 		<Center/>
 
