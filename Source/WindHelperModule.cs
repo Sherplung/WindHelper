@@ -1,106 +1,52 @@
-﻿using Celeste.Mod.WindHelper.Entities;
-using Monocle;
-using MonoMod.ModInterop;
-using System;
-using System.Linq;
-using System.Reflection;
-using static Celeste.WindController;
+﻿namespace Celeste.Mod.WindHelper;
 
-namespace Celeste.Mod.WindHelper;
-
-public class WindHelperModule : EverestModule {
-    public static WindHelperModule Instance { get; private set; }
-
-    //compatibility dependencies
-    public static bool communalHelperLoaded;
-
-    public static bool crystallineHelperLoaded;
-
-    public static Type CrystallineWindController;
+public class WindHelperModule : EverestModule
+{
+    private static WindHelperModule Instance {get; set;}
 
     public override Type SettingsType => typeof(WindHelperModuleSettings);
-    public static WindHelperModuleSettings Settings => (WindHelperModuleSettings) Instance._Settings;
+    public static WindHelperModuleSettings Settings => (WindHelperModuleSettings)Instance._Settings;
 
     public override Type SessionType => typeof(WindHelperModuleSession);
-    public static WindHelperModuleSession Session => (WindHelperModuleSession) Instance._Session;
+    public static WindHelperModuleSession Session => (WindHelperModuleSession)Instance._Session;
 
     public override Type SaveDataType => typeof(WindHelperModuleSaveData);
-    public static WindHelperModuleSaveData SaveData => (WindHelperModuleSaveData) Instance._SaveData;
+    public static WindHelperModuleSaveData SaveData => (WindHelperModuleSaveData)Instance._SaveData;
 
-    public WindHelperModule() {
+    public WindHelperModule()
+    {
         Instance = this;
-#if DEBUG
-        // debug builds use verbose logging
-        Logger.SetLogLevel(nameof(WindHelperModule), LogLevel.Debug);
-#else
-        // release builds use info logging to reduce spam in log files
-        Logger.SetLogLevel(nameof(WindHelperModule), LogLevel.Info);
-#endif
+        #if DEBUG
+            // debug builds use verbose logging
+            Logger.SetLogLevel(nameof(WindHelperModule), LogLevel.Debug);
+        #else
+            // release builds use info logging to reduce spam in log files
+            Logger.SetLogLevel(nameof(WindHelperModule), LogLevel.Info);
+        #endif
     }
 
-    public override void Load() {
-        //compatibility
-        EverestModuleMetadata communalHelper = new()
-        {
-            Name = "CommunalHelper",
-            Version = new Version(1, 24, 4)
-        };
-        communalHelperLoaded = Everest.Loader.DependencyLoaded(communalHelper);
+    // OPTIONAL DEPENDENCIES GO HERE
+    internal static bool CrystallineHelperLoaded;
 
-        EverestModuleMetadata crystallineHelper = new()
-        {
-            Name = "CrystallineHelper",
-            Version = new Version(1, 17, 1)
-        };
-        crystallineHelperLoaded = Everest.Loader.DependencyLoaded(crystallineHelper);
-
-        if (Everest.Loader.TryGetDependency(crystallineHelper, out EverestModule crystallineModule)) {
-            Assembly crystallineAssembly = crystallineModule.GetType().Assembly;
-            CrystallineWindController = crystallineAssembly.GetType("vitmod.CustomWindController");
-        }
-
-        //method patches
-        Everest.Events.Level.OnLoadLevel += LoadCustomWindController;
-        //hook
-        WindBooster.Load();
-    }
-
-    public override void Unload() {
-        Everest.Events.Level.OnLoadLevel -= LoadCustomWindController;
-        WindBooster.Unload();
-    }
-
-    public override void Initialize()
+    public override void Load()
     {
-        base.Initialize();
+        FrostHelperImports.Load();
+        CommunalHelperImports.Load();
+        GravityHelperImports.Load();
+        LifecycleMethods.OnLoad();
 
-        EverestModuleMetadata communalHelper = new()
-        {
-            Name = "CommunalHelper",
-            Version = new Version(1, 24, 4)
-        };
-        communalHelperLoaded = Everest.Loader.DependencyLoaded(communalHelper);
-        EverestModuleMetadata crystallineHelper = new()
-        {
-            Name = "CrystallineHelper",
-            Version = new Version(1, 17, 1)
-        };
-        crystallineHelperLoaded = Everest.Loader.DependencyLoaded(crystallineHelper);
-        typeof(CommunalHelperIntegration).ModInterop();
-        if (Everest.Loader.TryGetDependency(crystallineHelper, out EverestModule crystallineModule))
-        {
-            Assembly crystallineAssembly = crystallineModule.GetType().Assembly;
-            CrystallineWindController = crystallineAssembly.GetType("vitmod.CustomWindController");
-        }
+        #region Optional Dependency Loading
+            EverestModuleMetadata crystallineHelper = new()
+            {
+                Name = "CrystallineHelper",
+                Version = new Version(1, 17, 2)
+            };
+            CrystallineHelperLoaded = Everest.Loader.DependencyLoaded(crystallineHelper);
+        #endregion
     }
 
-    private void LoadCustomWindController(Level level, Player.IntroTypes playerIntro, bool isFromLoader)
+    public override void Unload()
     {
-        level.Entities.FindFirst<WindController>()?.RemoveSelf();
-        level.Add(level.windController = new ExtendedWindController(level.Session.LevelData.WindPattern));
-        if (playerIntro != 0)
-        {
-            level.windController.SetStartPattern();
-        }
+        LifecycleMethods.OnUnload();
     }
 }

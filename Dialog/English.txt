@@ -1,14 +1,5 @@
 Sherplung_WindHelper= WindHelper
-
 Sherplung_WindHelperMaps= WindHelperMaps
-
-SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDEASING= Additive Wind Easing
-
-SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDEASING_HINT= Changes how the level wind eases to the additive wind value.
-
-SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDAMBIENCE= Additive Wind Ambience
-
-SHERPLUNG_WINDHELPER_MODOPTIONS_ADDITIVEWINDAMBIENCE_HINT= Sets whether or not the ambient wind noise is affected by additive wind.
 
 Sherplung_WindHelperMaps_1_windhelper_demonstration= WindHelper Demo
 

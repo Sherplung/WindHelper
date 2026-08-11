@@ -1,14 +1,20 @@
-local enums = require("consts.celeste_enums")
-
 local bellows = {}
+
+local orientations = {
+    Floor = "Floor",
+    WallLeft = "WallLeft",
+    WallRight = "WallRight",
+	Ceiling = "Ceiling"
+}
 
 bellows.name = "WindHelper/Bellows"
 bellows.depth = -8500
+bellows.justification = {0.5, 1.0}
 bellows.texture = "Sherplung/WindHelper/Bellows/BellowsLoenn"
 
 bellows.fieldInformation = {
     orientation = {
-        options = enums.spring_orientations,
+        options = orientations,
         editable = false
     }
 }
@@ -49,25 +55,72 @@ bellows.placements = {
             wind_duration = 1.0,
             playerCanUse = true
         }
+    },
+    {
+        name = "down",
+        data = {
+            orientation = "Ceiling",
+            wind_strength = 400.0,
+            wind_duration = 1.0,
+            playerCanUse = true
+        }
     }
 }
-
-function bellows.justification(room, entity)
-    if entity.orientation == "Floor" then
-        return {0.5, 1.0}
-    else
-        return {0.5, 1.0}
-    end
-end
 
 function bellows.rotation(room, entity)
     if entity.orientation == "Floor" then
         return 0.0
     elseif entity.orientation == "WallLeft" then
         return math.pi / 2
-    else
+    elseif entity.orientation == "WallRight" then
         return -math.pi / 2
+	elseif entity.orientation == "Ceiling" then
+		return math.pi
     end
+end
+
+function bellows.rotate(room, entity, direction)
+    if direction < 0 then
+	    if entity.orientation == "Floor" then
+			entity.orientation = "WallRight"
+		elseif entity.orientation == "WallRight" then
+			entity.orientation = "Ceiling"
+		elseif entity.orientation == "Ceiling" then
+			entity.orientation = "WallLeft"
+		elseif entity.orientation == "WallLeft" then
+			entity.orientation = "Floor"
+		end
+		return direction < 0
+	elseif direction > 0 then
+	    if entity.orientation == "Floor" then
+			entity.orientation = "WallLeft"
+		elseif entity.orientation == "WallLeft" then
+			entity.orientation = "Ceiling"
+		elseif entity.orientation == "Ceiling" then
+			entity.orientation = "WallRight"
+		elseif entity.orientation == "WallRight" then
+			entity.orientation = "Floor"
+		end
+		return direction > 0
+	end
+end
+
+function bellows.flip(room, entity, horizontal, vertical)
+	if horizontal then
+		if entity.orientation == "Floor" then
+			entity.orientation = "Ceiling"
+		elseif entity.orientation == "Ceiling" then
+			entity.orientation = "Floor"
+		end
+		return horizontal
+	elseif vertical then
+		if entity.orientation == "WallLeft" then
+			entity.orientation = "WallRight"
+		elseif entity.orientation == "WallRight" then
+			entity.orientation = "WallLeft"
+		end
+		return vertical
+	end
 end
 
 return bellows

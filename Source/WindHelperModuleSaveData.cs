@@ -1,5 +1,5 @@
 namespace Celeste.Mod.WindHelper;
 
-public class WindHelperModuleSaveData : EverestModuleSaveData {
-
+public class WindHelperModuleSaveData : EverestModuleSaveData
+{
 }

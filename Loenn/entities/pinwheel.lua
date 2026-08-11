@@ -4,7 +4,9 @@ local pinwheel = {}
 
 local behaviorTypes = {
     AnyAngle = "AnyAngle",
-    Cardinals = "Cardinals"
+    Cardinals = "Cardinals",
+	Diagonals = "Diagonals",
+	EightWay = "EightWay"
 }
 
 pinwheel.name = "WindHelper/Pinwheel"
@@ -17,7 +19,11 @@ function pinwheel.texture(room, entity)
         return "Sherplung/WindHelper/Pinwheel/Blue/PinwheelBlue1"
     elseif entity.behaviorType == behaviorTypes["Cardinals"] then
         return "Sherplung/WindHelper/Pinwheel/RedWhite/PinwheelRedWhite1"
-    else 
+    elseif entity.behaviorType == behaviorTypes["Diagonals"] then
+		return "Sherplung/WindHelper/Pinwheel/GreenWhite/PinwheelGreenWhite1"
+	elseif entity.behaviorType == behaviorTypes["EightWay"] then
+		return "Sherplung/WindHelper/Pinwheel/RedGreen/PinwheelRedGreen1"
+	else
         return "Sherplung/WindHelper/Pinwheel/Blue/PinwheelBlue1"
     end
 end
@@ -56,6 +62,24 @@ pinwheel.placements = {
       wind_duration = 1.0,
       uses = -1,
       behaviorType = "Cardinals"
+    }
+  },
+  {
+    name = "diagonal",
+    data = {
+      wind_strength = 400.0,
+      wind_duration = 1.0,
+      uses = -1,
+      behaviorType = "Diagonals"
+    }
+  },
+  {
+    name = "eightWay",
+    data = {
+      wind_strength = 400.0,
+      wind_duration = 1.0,
+      uses = -1,
+      behaviorType = "EightWay"
     }
   }
 }

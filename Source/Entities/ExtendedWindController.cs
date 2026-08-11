@@ -1,54 +1,27 @@
-﻿using Celeste;
-using Celeste.Mod.Entities;
-using Celeste.Mod.WindHelper;
-using IL.Celeste.Mod.Registry.DecalRegistryHandlers;
-using IL.MonoMod;
-using Microsoft.Xna.Framework;
-using Monocle;
-using MonoMod;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-
-namespace Celeste.Mod.WindHelper.Entities;
+﻿namespace Celeste.Mod.WindHelper.Entities;
 
 [Tracked]
+[UsedImplicitly]
 public class ExtendedWindController : WindController
 {
-
     private Vector2 additiveWind;
-
     private Vector2 incrementerAdditive;
 
-    private Vector2 incrementerPattern;
-
-    private int controllableWindCount;
-
-    private float controllableWindStrength;
-
     private Vector2 controllableWind;
-
-    private Vector2 additivePermaWind;
-
-    private Vector2 customPatternWind;
-
+    private int controllableWindCount;
+    private float controllableWindStrength;
     private Vector2 heldDirection;
 
-    private Vector2 totalAddedWind;
-
-    private Coroutine windCoroutine;
-
+    private Vector2 incrementerPattern;
+    private Vector2 customPatternWind;
     private Coroutine customPatternCoroutine;
+
+    private Vector2 additivePermaWind;
+    private Vector2 totalAddedWind;
 
     private bool fastEasing;
 
-    public ExtendedWindController(Patterns pattern)
-        : base(pattern)
+    public ExtendedWindController(Patterns pattern) : base(pattern)
     {
         additiveWind = Vector2.Zero;
         incrementerAdditive = Vector2.Zero;
@@ -63,7 +36,7 @@ public class ExtendedWindController : WindController
         Add(listener = new TransitionListener());
         listener.OnOutBegin = () =>
         {
-            this.Components.RemoveAll<Coroutine>();
+            Components.RemoveAll<Coroutine>();
             additiveWind = Vector2.Zero;
             incrementerAdditive = Vector2.Zero;
             incrementerPattern = Vector2.Zero;
@@ -75,10 +48,11 @@ public class ExtendedWindController : WindController
         };
     }
 
-    public Vector2 GetAdditiveWind()
+    public ExtendedWindController() : this(Patterns.None)
     {
-        return incrementerAdditive;
     }
+
+    public Vector2 GetAdditiveWind() => incrementerAdditive;
 
     private void AdditiveSetAmbienceStrength(bool strong)
     {
@@ -119,7 +93,7 @@ public class ExtendedWindController : WindController
 
     public void AddWind(Vector2 wind, float duration)
     {
-        Add(windCoroutine = new Coroutine(TimedWind(wind, duration)));
+        Add(new Coroutine(TimedWind(wind, duration)));
     }
 
     public void ChangeControllableWind(float strength, bool add = true)
@@ -143,9 +117,9 @@ public class ExtendedWindController : WindController
         for (int i = 0; i < commands.Length; i++)
         {
             string[] indivCmd = commands[i].Split(",");
-            values[i,0] = float.Parse(indivCmd[0].Trim(',').Trim(':'));
-            values[i,1] = float.Parse(indivCmd[1].Trim(',').Trim(':'));
-            values[i,2] = float.Parse(indivCmd[2].Trim(',').Trim(':'));
+            values[i, 0] = float.Parse(indivCmd[0].Trim(',').Trim(':'));
+            values[i, 1] = float.Parse(indivCmd[1].Trim(',').Trim(':'));
+            values[i, 2] = float.Parse(indivCmd[2].Trim(',').Trim(':'));
         }
         if (customPatternCoroutine != null)
         {
@@ -155,6 +129,7 @@ public class ExtendedWindController : WindController
         Add(customPatternCoroutine = new Coroutine(CustomWindPattern(values)));
     }
 
+    [SuppressMessage("ReSharper", "IteratorNeverReturns")]
     private IEnumerator CustomWindPattern(float[,] values)
     {
         while (true)
@@ -169,37 +144,23 @@ public class ExtendedWindController : WindController
     }
 
     [MonoModLinkTo("Monocle.Entity", "System.Void Update()")]
-    public void base_Update()
+    private void base_Update()
     {
     }
 
+    [SuppressMessage("ReSharper", "ConvertIfStatementToConditionalTernaryExpression")]
     public override void Update()
     {
         base_Update();
         if (pattern == Patterns.LeftGemsOnly)
         {
-            bool flag = false;
-            foreach (StrawberrySeed entity in base.Scene.Tracker.GetEntities<StrawberrySeed>())
-            {
-                if (entity.Collected)
-                {
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag)
-            {
-                targetSpeed.X = -400f;
-                SetAmbienceStrength(strong: false);
-            }
-            else
-            {
-                targetSpeed.X = 0f;
-                SetAmbienceStrength(strong: false);
-            }
+            bool flag = Scene.Tracker.GetEntities<StrawberrySeed>().Cast<StrawberrySeed>().Any(entity => entity.Collected);
+            targetSpeed.X = flag ? -400f : 0f;
+            SetAmbienceStrength(false);
         }
+
         // handling controllable wind
-        heldDirection = CorrectDashPrecision(Input.GetAimVector().SafeNormalize(ifZero : Vector2.Zero));
+        heldDirection = Utils.CorrectDashPrecision(Input.GetAimVector().SafeNormalize(Vector2.Zero));
         if (controllableWindCount > 0)
         {
             controllableWind = heldDirection * controllableWindStrength;
@@ -210,51 +171,63 @@ public class ExtendedWindController : WindController
             controllableWindStrength = 0f;
             controllableWindCount = 0;
         }
+
         // additive wind easing type selector
-        totalAddedWind = controllableWind + additiveWind + additivePermaWind + customPatternWind;
-        switch (WindHelperModule.Settings.AdditiveWindEasing)
+        totalAddedWind = (controllableWind + additiveWind + additivePermaWind + customPatternWind).ClampMagnitude(WindHelperModule.Session.MaxWindSpeed);
+        switch (WindHelperModule.Session.AdditiveWindEasing)
         {
-            case WindHelperModuleSettings.EasingTypes.EaseSlowToZero:
-                if (totalAddedWind != Vector2.Zero || fastEasing) 
-                { 
-                    incrementerAdditive = totalAddedWind; 
+            case WindHelperModuleSession.EasingTypes.EaseSlowToZero:
+                if (totalAddedWind != Vector2.Zero || fastEasing)
+                {
+                    incrementerAdditive = totalAddedWind;
                 }
-                else { incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 2000f * Engine.DeltaTime); }
+                else
+                {
+                    incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 2000f * Engine.DeltaTime);
+                }
                 break;
-            case WindHelperModuleSettings.EasingTypes.NoEasing:
+            case WindHelperModuleSession.EasingTypes.NoEasing:
                 incrementerAdditive = totalAddedWind;
                 break;
-            case WindHelperModuleSettings.EasingTypes.EaseFastAlways:
+            case WindHelperModuleSession.EasingTypes.EaseFastAlways:
                 incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 10000f * Engine.DeltaTime);
                 break;
-            case WindHelperModuleSettings.EasingTypes.EaseFastUpEaseSlowDown:
-                if (incrementerAdditive.LengthSquared() <= totalAddedWind.LengthSquared()) 
-                { 
-                    incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 10000f * Engine.DeltaTime); 
+            case WindHelperModuleSession.EasingTypes.EaseFastUpEaseSlowDown:
+                if (incrementerAdditive.LengthSquared() <= totalAddedWind.LengthSquared())
+                {
+                    incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 10000f * Engine.DeltaTime);
                 }
-                else { incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 2000f * Engine.DeltaTime); }
+                else
+                {
+                    incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 2000f * Engine.DeltaTime);
+                }
                 break;
-            case WindHelperModuleSettings.EasingTypes.EaseFastStartEaseSlowEnd:
+            case WindHelperModuleSession.EasingTypes.EaseFastStartEaseSlowEnd:
                 if (fastEasing)
                 {
                     incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 10000f * Engine.DeltaTime);
                 }
-                else { incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 2000f * Engine.DeltaTime); }
+                else
+                {
+                    incrementerAdditive = Calc.Approach(incrementerAdditive, totalAddedWind, 2000f * Engine.DeltaTime);
+                }
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
         incrementerPattern = Calc.Approach(incrementerPattern, targetSpeed, 1000f * Engine.DeltaTime);
 
         // handle ambience
-        if (WindHelperModule.Settings.AdditiveWindAmbience == true)
+        if (WindHelperModule.Session.AdditiveWindAmbience)
         {
             // if the total target wind has a magnitude greater than or equal to 800 (LengthSquared is faster apparently)
-            if ((totalAddedWind + targetSpeed).LengthSquared() >= (640000f - 1000f))
+            if ((totalAddedWind + targetSpeed).LengthSquared() >= 640000f - 1000f)
             {
-                AdditiveSetAmbienceStrength(strong: true);
+                AdditiveSetAmbienceStrength(true);
             }
             else if ((totalAddedWind + targetSpeed).LengthSquared() >= 0f)
             {
-                AdditiveSetAmbienceStrength(strong: false);
+                AdditiveSetAmbienceStrength(false);
             }
         }
 
@@ -264,40 +237,19 @@ public class ExtendedWindController : WindController
         {
             return;
         }
+
         //crystalline helper overlap protection
-        if (WindHelperModule.crystallineHelperLoaded)
+        if (WindHelperModule.CrystallineHelperLoaded && Utils.CrystallineWindControllerExists(Scene))
         {
-            if (base.Scene.Tracker.Entities[WindHelperModule.CrystallineWindController].Count > 0)
+            foreach (WindMover component in Scene.Tracker.GetComponents<WindMover>().Cast<WindMover>())
             {
-                foreach (WindMover component in base.Scene.Tracker.GetComponents<WindMover>())
-                {
-                    component.Move(incrementerAdditive * 0.1f * Engine.DeltaTime);
-                }
-                return;
+                component.Move(incrementerAdditive * 0.1f * Engine.DeltaTime);
             }
+            return;
         }
-        foreach (WindMover component in base.Scene.Tracker.GetComponents<WindMover>())
+        foreach (WindMover component in Scene.Tracker.GetComponents<WindMover>().Cast<WindMover>())
         {
             component.Move(level.Wind * 0.1f * Engine.DeltaTime);
         }
-    }
-
-    // A copy of the function of the same name from Celeste.Player
-    // Copied because otherwise we'd have to get the player every frame just to use it
-    // Also we're using this so that Controller maintains parity with Keyboard
-    // If we don't, it's possible to angle the stick so that the direction you exit a bubble and the direction the wind blows end up entirely different
-    private static Vector2 CorrectDashPrecision(Vector2 dir)
-    {
-        if (dir.X != 0.0 && Math.Abs(dir.X) < 1.0 / 1000.0)
-        {
-            dir.X = 0.0f;
-            dir.Y = Math.Sign(dir.Y);
-        }
-        else if (dir.Y != 0.0 && Math.Abs(dir.Y) < 1.0 / 1000.0)
-        {
-            dir.Y = 0.0f;
-            dir.X = Math.Sign(dir.X);
-        }
-        return dir;
     }
 }
