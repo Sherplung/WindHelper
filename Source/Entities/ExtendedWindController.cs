@@ -160,7 +160,8 @@ public class ExtendedWindController : WindController
         }
 
         // handling controllable wind
-        heldDirection = Utils.CorrectDashPrecision(Input.GetAimVector().SafeNormalize(Vector2.Zero));
+        heldDirection = Utils.CorrectDashPrecision(Utils.GetAimVectorReal());
+
         if (controllableWindCount > 0)
         {
             controllableWind = heldDirection * controllableWindStrength;
@@ -173,7 +174,14 @@ public class ExtendedWindController : WindController
         }
 
         // additive wind easing type selector
-        totalAddedWind = (controllableWind + additiveWind + additivePermaWind + customPatternWind).ClampMagnitude(WindHelperModule.Session.MaxWindSpeed);
+        if (WindHelperModule.Session.MaxWindSpeed >= 0)
+        {
+            totalAddedWind = (controllableWind + additiveWind + additivePermaWind + customPatternWind).ClampMagnitude(WindHelperModule.Session.MaxWindSpeed);
+        }
+        else
+        {
+            totalAddedWind = (controllableWind + additiveWind + additivePermaWind + customPatternWind);
+        }
         switch (WindHelperModule.Session.AdditiveWindEasing)
         {
             case WindHelperModuleSession.EasingTypes.EaseSlowToZero:

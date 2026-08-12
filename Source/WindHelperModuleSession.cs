@@ -11,7 +11,7 @@ public class WindHelperModuleSession : EverestModuleSession
         EaseFastStartEaseSlowEnd = 4
     }
 
-    public float MaxWindSpeed = 2000f;
+    public float MaxWindSpeed = -1f;
 
     public EasingTypes AdditiveWindEasing {get; set;} = EasingTypes.EaseSlowToZero;
 

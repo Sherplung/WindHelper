@@ -53,9 +53,11 @@ You cannot hit a Pinwheel again until the gust it produces ends, so one Pinwheel
 Pinwheels can also be set to have a limited number of uses, which is displayed on the Pinwheel as text when the number of uses is greater than zero.
 If the Pinwheel runs out of uses, it can no longer be interacted with and will turn gray.
 The way in which Pinwheels choose what direction to produce the gust in is also not fixed.
-Two settings currently exist for this.
+Four settings currently exist for this.
 Blue Pinwheels produce the gust in the exact direction that they were hit.
-Red and white Pinwheels produce the gust in the closest cardinal direction to the direction they were hit (hence why they are called Cardinal Pinwheels).
+Red and white Pinwheels produce the gust in the closest cardinal direction to the direction they were hit.
+Green and white Pinwheels produce the gust in the closest diagonal direction to the direction they were hit.
+Red and green Pinwheels function as a combination of red and white Pinwheels and green and white Pinwheels.
 
 SHERPLUNG_WINDHELPER_DEMO_BELLOWS_SIGN=
 Next up are the Bellows.
@@ -87,6 +89,8 @@ Additionally, Windblown Blocks have a "mass" parameter that affects the speed at
 A Windblown Block of mass 2 will be pushed half as much as a Windblown Block of mass 1, and one of mass 0.5 twice as much as one of mass 1.
 Windblown Blocks can also be configured to prevent their movement on either the X or Y axis to make their movement more predictable in large rooms.
 They can also have their movement enabled or disabled by specified flags, if desired.
+Windblown Dash Blocks also exist, and work the same way as standard Windblown Blocks.
+Unlike Windblown Blocks, Windblown Dash Blocks and all static movers attached to them will be destroyed upon dashing into the block.
 
 SHERPLUNG_WINDHELPER_DEMO_FLOATINGSPINNER_SIGN=
 This is the Windblown Spinner.
@@ -96,7 +100,7 @@ Their movement can be axis locked and managed by flags as well.
 Only Windblown Spinners of identical parameters will have spinner juice form between them.
 
 SHERPLUNG_WINDHELPER_DEMO_CONTROLLABLEWIND_SIGN=
-Finally, we have the Controllable Wind Trigger.
+This is the Controllable Wind Trigger.
 As the name suggests, the Controllable Wind Trigger allows you to control the direction of the wind based on what direction you are holding.
 The trigger has 4 behavior types: Add, Remove, Duration, and WhileInside.
 The Add behavior adds 1 count of controllable wind at the specified strength when entered.
@@ -110,6 +114,11 @@ The WhileInside behavior adds a count of controllable wind at the specified stre
 Controllable Wind Triggers can also be set to only activate once.
 Controllable wind follows the held direction at all times, including when inside bubbles (boosters).
 The three triggers here, represented by seeker barriers, Add, Remove, and add for 10 seconds controllable wind of strength 800, in order from left to right.
+
+SHERPLUNG_WINDHELPER_DEMO_WINDBOOSTER_SIGN=
+These are Wind-Charged Boosters.
+Wind-Charged Boosters behave in one of two ways. They either create a timed gust of wind in the direction they move, or grant the player controllable wind for the time they are in the booster.
+The former behavior is applied to green Boosters by default, and the latter to red Boosters, but both can be applied to Boosters of either color.
 
 SHERPLUNG_WINDHELPER_DEMO_GP1_SIGN=
 This is the first gameplay concept room.

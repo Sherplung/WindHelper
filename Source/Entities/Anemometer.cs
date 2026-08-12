@@ -183,7 +183,7 @@ internal class Anemometer : Actor
                 {
                     if (Input.MoveX != 0 || Input.MoveY != 0)
                     {
-                        windDirectionVector = Utils.CorrectDashPrecision(Input.GetAimVector().SafeNormalize(Vector2.Zero));
+                        windDirectionVector = Utils.CorrectDashPrecision(Utils.GetAimVectorReal());
                     }
                     else
                     {

@@ -7,8 +7,8 @@ windBooster.placements = {
         name = "green",
         data = {
             red = false,
-            windStrength = 1200.0,
-            dashBased = false,
+            windStrength = 800.0,
+            dashBased = true,
             windDuration = 1.0,
             ch9_hub_booster = false,
 			oneUse = false
@@ -31,10 +31,10 @@ function windBooster.texture(room, entity)
     local red = entity.red
 
     if red then
-        return "objects/booster/boosterRed00"
+        return "Sherplung/WindHelper/WindBooster/WindBoosterRLoenn"
 
     else
-        return "objects/booster/booster00"
+        return "Sherplung/WindHelper/WindBooster/WindBoosterGLoenn"
     end
 end
 

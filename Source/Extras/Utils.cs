@@ -46,6 +46,16 @@ public static class Utils
     }
 
     [UsedImplicitly]
+    internal static Vector2 GetAimVectorReal()
+    {
+        if (Input.MoveX == 0 && Input.MoveY == 0)
+        {
+            return Vector2.Zero;
+        }
+        return Input.GetAimVector();
+    }
+
+    [UsedImplicitly]
     internal static bool ExtendedWindControllerExists(Scene scene, out ExtendedWindController WindController)
     {
         WindController = scene.Tracker.GetEntity<ExtendedWindController>();

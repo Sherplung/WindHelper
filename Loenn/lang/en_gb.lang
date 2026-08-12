@@ -97,7 +97,7 @@ entities.WindHelper/FloatingBlock.attributes.description.disableFlag=If a flag i
 # Windblown Dash Block
 
 entities.WindHelper/FloatingDashBlock.placements.name.default=Windblown Dash Block
-entities.WindHelper/FloatingDashBlock.placements.description.default=A Dash block that is moved by wind.
+entities.WindHelper/FloatingDashBlock.placements.description.default=A Dash Block that is moved by wind.
 
 entities.WindHelper/FloatingDashBlock.attributes.name.mass=Mass
 entities.WindHelper/FloatingDashBlock.attributes.description.mass=Inversely proportional to how much the block is moved by wind. Can be negative.
@@ -137,10 +137,10 @@ entities.WindHelper/FloatingSpinner.attributes.description.disableFlag=If a flag
 # Wind-Charged Booster
 
 entities.WindHelper/WindBooster.placements.name.green=Wind-Charged Booster (Green)
-entities.WindHelper/FloatingSpinner.placements.description.green=Booster that grants Controllable Wind while the player is inside it.
+entities.WindHelper/WindBooster.placements.description.green=Booster that creates a wind gust in the direction it moves.
 
 entities.WindHelper/WindBooster.placements.name.red=Wind-Charged Booster (Red)
-entities.WindHelper/FloatingSpinner.placements.description.red=Booster that grants Controllable Wind while the player is inside it.
+entities.WindHelper/WindBooster.placements.description.red=Booster that grants Controllable Wind while the player is inside it.
 
 entities.WindHelper/WindBooster.attributes.name.windStrength=Wind Strength
 entities.WindHelper/WindBooster.attributes.description.windStrength=Strength of the Controllable Wind granted by the Booster.
@@ -207,10 +207,10 @@ triggers.WindHelper/CustomWindPatternTrigger.attributes.description.onlyOnce=Whe
 # Customize Wind Properties Trigger
 
 triggers.WindHelper/CustomizeWindPropertiesTrigger.placements.name.default=Customize Wind Properties
-triggers.WindHelper/CustomizeWindPropertiesTrigger.placements.description.default=Sets fundamenal properties of custom wind.
+triggers.WindHelper/CustomizeWindPropertiesTrigger.placements.description.default=Sets fundamental properties of WindHelper custom wind.
 
 triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.name.maxWindSpeed=Max Wind Speed
-triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.description.maxWindSpeed=The maximum magnitude of the wind speed vector.
+triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.description.maxWindSpeed=The maximum magnitude of the wind speed vector. Any negative value will remove the cap.
 
 triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.name.easingType=Easing Type
 triggers.WindHelper/CustomizeWindPropertiesTrigger.attributes.description.easingType=The Easing used to start and stop the wind.
