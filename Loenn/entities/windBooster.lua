@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local windBooster = {}
 
 windBooster.name = "WindHelper/WindBooster"
@@ -36,6 +38,10 @@ function windBooster.texture(room, entity)
     else
         return "Sherplung/WindHelper/WindBooster/WindBoosterGLoenn"
     end
+end
+
+function windBooster.selection(room, entity)
+    return utils.rectangle(entity.x - 9, entity.y - 9, 18, 18)
 end
 
 return windBooster
