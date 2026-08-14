@@ -16,6 +16,8 @@ internal class AddWindComponentsTrigger : Trigger
     private readonly float duration;
     private readonly bool onlyOnce;
 
+    private bool used;
+
     public AddWindComponentsTrigger(EntityData data, Vector2 offset) : base(data, offset)
     {
         behavior = data.Enum<BehaviorTypes>("behaviorType");
@@ -23,28 +25,33 @@ internal class AddWindComponentsTrigger : Trigger
         strength.Y = data.Float("windY");
         duration = data.Float("duration");
         onlyOnce = data.Bool("onlyOnce");
+        used = false;
     }
 
     public override void OnEnter(Player player)
     {
         base.OnEnter(player);
         Utils.AddExtendedWindControllerIfNone(Scene, out ExtendedWindController windController);
-
-        switch (behavior)
+        if (!used)
         {
-            case BehaviorTypes.WhileInside:
-                windController.AddPermaWind(strength);
-                break;
-            case BehaviorTypes.AddPerma:
-                windController.AddPermaWind(strength);
-                if (onlyOnce) RemoveSelf();
-                break;
-            case BehaviorTypes.AddDuration:
-                windController.AddWind(strength, duration);
-                if (onlyOnce) RemoveSelf();
-                break;
-            default:
-                throw new Exception("Impossible Enum Value! How did you do that?");
+            switch (behavior)
+            {
+                case BehaviorTypes.WhileInside:
+                    windController.AddPermaWind(strength);
+                    break;
+                case BehaviorTypes.AddPerma:
+                    windController.AddPermaWind(strength);
+                    used = true;
+                    //if (onlyOnce) RemoveSelf();
+                    break;
+                case BehaviorTypes.AddDuration:
+                    windController.AddWind(strength, duration);
+                    used = true;
+                    //if (onlyOnce) RemoveSelf();
+                    break;
+                default:
+                    throw new Exception("Impossible Enum Value! How did you do that?");
+            }
         }
     }
 
@@ -57,7 +64,8 @@ internal class AddWindComponentsTrigger : Trigger
         {
             case BehaviorTypes.WhileInside:
                 windController.AddPermaWind(-strength);
-                if (onlyOnce) RemoveSelf();
+                used = true;
+                //if (onlyOnce) RemoveSelf();
                 break;
             case BehaviorTypes.AddPerma:
             case BehaviorTypes.AddDuration:
