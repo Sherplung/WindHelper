@@ -18,6 +18,7 @@ internal class ControllableWindTrigger : Trigger
     private readonly bool onlyOnce;
 
     private bool currentlyActive;
+    private bool used;
 
     public ControllableWindTrigger(EntityData data, Vector2 offset) : base(data, offset)
     {
@@ -43,6 +44,7 @@ internal class ControllableWindTrigger : Trigger
     {
         base.OnEnter(player);
         Utils.AddExtendedWindControllerIfNone(Scene, out ExtendedWindController windController);
+        if (used) return;
 
         switch (behavior)
         {
@@ -51,16 +53,16 @@ internal class ControllableWindTrigger : Trigger
                 break;
             case BehaviorTypes.Add:
                 windController.ChangeControllableWind(strength);
-                if (onlyOnce) RemoveSelf();
+                if (onlyOnce) used = true;
                 break;
             case BehaviorTypes.Remove:
                 windController.ChangeControllableWind(strength, false);
-                if (onlyOnce) RemoveSelf();
+                if (onlyOnce) used = true;
                 break;
             case BehaviorTypes.Duration:
                 if (currentlyActive) return;
                 Add(new Coroutine(TimedControllableWind()));
-                if (onlyOnce) RemoveSelf();
+                if (onlyOnce) used = true;
                 break;
             default:
                 throw new Exception("Impossible Enum Value! How did you do that?");
@@ -71,12 +73,13 @@ internal class ControllableWindTrigger : Trigger
     {
         base.OnLeave(player);
         Utils.AddExtendedWindControllerIfNone(Scene, out ExtendedWindController windController);
+        if (used) return;
 
         switch (behavior)
         {
             case BehaviorTypes.WhileInside:
                 windController.ChangeControllableWind(strength, false);
-                if (onlyOnce) RemoveSelf();
+                if (onlyOnce) used = true;
                 break;
             case BehaviorTypes.Add:
             case BehaviorTypes.Remove:

@@ -65,6 +65,12 @@ public static class Utils
     [UsedImplicitly]
     internal static void AddExtendedWindControllerIfNone(Scene scene, out ExtendedWindController WindController)
     {
+        if (!LoadExtendedWindController.WindHelperIsNeeded)
+        {
+            WindController = null;
+            return;
+        }
+
         if (ExtendedWindControllerExists(scene, out ExtendedWindController windController))
         {
             WindController = windController;
