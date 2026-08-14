@@ -25,33 +25,29 @@ internal class AddWindComponentsTrigger : Trigger
         strength.Y = data.Float("windY");
         duration = data.Float("duration");
         onlyOnce = data.Bool("onlyOnce");
-        used = false;
     }
 
     public override void OnEnter(Player player)
     {
         base.OnEnter(player);
         Utils.AddExtendedWindControllerIfNone(Scene, out ExtendedWindController windController);
-        if (!used)
+        if (used) return;
+
+        switch (behavior)
         {
-            switch (behavior)
-            {
-                case BehaviorTypes.WhileInside:
-                    windController.AddPermaWind(strength);
-                    break;
-                case BehaviorTypes.AddPerma:
-                    windController.AddPermaWind(strength);
-                    used = true;
-                    //if (onlyOnce) RemoveSelf();
-                    break;
-                case BehaviorTypes.AddDuration:
-                    windController.AddWind(strength, duration);
-                    used = true;
-                    //if (onlyOnce) RemoveSelf();
-                    break;
-                default:
-                    throw new Exception("Impossible Enum Value! How did you do that?");
-            }
+            case BehaviorTypes.WhileInside:
+                windController.AddPermaWind(strength);
+                break;
+            case BehaviorTypes.AddPerma:
+                windController.AddPermaWind(strength);
+                if (onlyOnce) used = true;
+                break;
+            case BehaviorTypes.AddDuration:
+                windController.AddWind(strength, duration);
+                if (onlyOnce) used = true;
+                break;
+            default:
+                throw new Exception("Impossible Enum Value! How did you do that?");
         }
     }
 
@@ -59,13 +55,13 @@ internal class AddWindComponentsTrigger : Trigger
     {
         base.OnLeave(player);
         Utils.AddExtendedWindControllerIfNone(Scene, out ExtendedWindController windController);
+        if (used) return;
 
         switch (behavior)
         {
             case BehaviorTypes.WhileInside:
                 windController.AddPermaWind(-strength);
-                used = true;
-                //if (onlyOnce) RemoveSelf();
+                if (onlyOnce) used = true;
                 break;
             case BehaviorTypes.AddPerma:
             case BehaviorTypes.AddDuration:
