@@ -18,7 +18,7 @@ internal class DiagonalWindSnowFG : Backdrop
     public DiagonalWindSnowFG(BinaryPacker.Element data)
     {
         Color = Calc.HexToColor(data.Attr("color", "ffffff"));
-        positions = new Vector2[data.AttrInt("density", 240) / 4]; // I'm like pretty sure 4 is the correct divisor here due to the math involved, but feel free to change this
+        positions = new Vector2[data.AttrInt("density", 240) / 2]; // I'm like pretty sure 4 is the correct divisor here due to the math involved, but feel free to change this (sherplung: 2 looks closer to me in practice)
         thinningFactor = data.AttrFloat("thinningFactor");
         for (int i = 0; i < positions.Length; i++)
         {
@@ -97,7 +97,7 @@ internal class DiagonalWindSnowFG : Backdrop
         for (int j = 0; j < positions.Length; j++)
         {
             float value = sines[j % sines.Length].Value;
-            Vector2 zero = feltWind != Vector2.Zero ? new Vector2(feltWind.X + value * 10f, feltWind.Y + value * 10f) : new Vector2(feltWind.X + value * 10f, feltWind.Y + (3f + value) * 10f);
+            Vector2 zero = feltWind != Vector2.Zero ? new Vector2(feltWind.X + value * 10f, feltWind.Y + value * 10f) : new Vector2(feltWind.X + value * 10f, feltWind.Y + (2f) * 10f);
             positions[j] += zero * Engine.DeltaTime;
         }
     }
