@@ -85,7 +85,9 @@ internal class WindBooster : Booster
         if (windBooster.dashBased)
         {
             Utils.AddExtendedWindControllerIfNone(windBooster.Scene, out ExtendedWindController windController);
-            windController.AddWind(direction * windBooster.windStrength, windBooster.windDuration);
+            Vector2 trueDirection = new Vector2(direction.X, GravityHelperImports.InvertIfPlayerInverted(direction.Y));
+
+            windController.AddWind(trueDirection * windBooster.windStrength, windBooster.windDuration);
         }
         if (windBooster.OneUse)
         {
