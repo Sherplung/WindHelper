@@ -23,6 +23,8 @@ public class DiagonalStardustFG : Backdrop
     private Vector2 scale = Vector2.One;
     private float fade;
 
+    private readonly float WindXMultiplier;
+    private readonly float WindYMultiplier;
     private readonly float Parallax;
     private readonly float Alpha;
 
@@ -31,6 +33,8 @@ public class DiagonalStardustFG : Backdrop
         particles = new Particle[data.AttrInt("density", 50)];
         string[] colorStrings = data.Attr("colors", "4cccef,f243bd,42f1dd").Split(",");
         colors = new Color[colorStrings.Length];
+        WindXMultiplier = data.AttrFloat("windXMultiplier", 1f);
+        WindYMultiplier = data.AttrFloat("windYMultiplier", 1f);
         Parallax = (float)Math.Max(data.AttrFloat("scroll", 1f), 0.00001);
         Alpha = data.AttrFloat("alpha", 1f);
         for (int j = 0; j < colorStrings.Length; j++)
@@ -66,6 +70,7 @@ public class DiagonalStardustFG : Backdrop
         {
             feltWind = Utils.CrystallineWindControllerExists(scene) ? level.Wind + windController.GetAdditiveWind() : level.Wind;
         }
+        feltWind = new Vector2(feltWind.X * WindXMultiplier, feltWind.Y * WindYMultiplier);
 
         scale.X = Math.Max(1f, Math.Abs(feltWind.Length()) / 100f);
         scale.Y = 1f;

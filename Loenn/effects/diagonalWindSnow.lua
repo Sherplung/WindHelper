@@ -28,6 +28,14 @@ diagonalWindSnow.fieldInformation = {
 		default = 1.0,
 		minimumValue = 0.0,
 		maximumValue = 1.0
+	},
+	windXMultiplier = {
+		fieldType = "number",
+		default = 1.0
+	},
+	windYMultiplier = {
+		fieldType = "number",
+		default = 1.0
 	}
 }
 
@@ -36,7 +44,9 @@ diagonalWindSnow.defaultData = {
     density = 240,
     thinningFactor = 0.0,
 	scroll = 1.0,
-	alpha = 1.0
+	alpha = 1.0,
+	windXMultiplier = 1.0,
+	windYMultiplier = 1.0
 }
 
 return diagonalWindSnow

@@ -14,7 +14,9 @@ internal class DiagonalWindSnowFG : Backdrop
 
     private float visibleFade = 1f;
     private readonly Vector2 CameraOffset = Vector2.Zero;
-    
+
+    private readonly float WindXMultiplier;
+    private readonly float WindYMultiplier;
     private readonly float Parallax;
     private readonly float Alpha;
 
@@ -23,6 +25,8 @@ internal class DiagonalWindSnowFG : Backdrop
         Color = Calc.HexToColor(data.Attr("color", "ffffff"));
         positions = new Vector2[data.AttrInt("density", 240) / 2]; // I'm like pretty sure 4 is the correct divisor here due to the math involved, but feel free to change this (sherplung: 2 looks closer to me in practice)
         thinningFactor = data.AttrFloat("thinningFactor");
+        WindXMultiplier = data.AttrFloat("windXMultiplier", 1f);
+        WindYMultiplier = data.AttrFloat("windYMultiplier", 1f);
         Parallax = (float)Math.Max(data.AttrFloat("scroll", 1f), 0.00001);
         Alpha = data.AttrFloat("alpha", 1f);
         for (int i = 0; i < positions.Length; i++)
@@ -79,6 +83,7 @@ internal class DiagonalWindSnowFG : Backdrop
         {
             feltWind = Utils.CrystallineWindControllerExists(scene) ? level.Wind + windController.GetAdditiveWind() : level.Wind;
         }
+        feltWind = new Vector2(feltWind.X * WindXMultiplier, feltWind.Y * WindYMultiplier);
 
         foreach (SineWave sine in sines)
         {
