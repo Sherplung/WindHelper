@@ -23,11 +23,16 @@ public class DiagonalStardustFG : Backdrop
     private Vector2 scale = Vector2.One;
     private float fade;
 
+    private readonly float Parallax;
+    private readonly float Alpha;
+
     public DiagonalStardustFG(BinaryPacker.Element data)
     {
         particles = new Particle[data.AttrInt("density", 50)];
         string[] colorStrings = data.Attr("colors", "4cccef,f243bd,42f1dd").Split(",");
         colors = new Color[colorStrings.Length];
+        Parallax = (float)Math.Max(data.AttrFloat("scroll", 1f), 0.00001);
+        Alpha = data.AttrFloat("alpha", 1f);
         for (int j = 0; j < colorStrings.Length; j++)
         {
             colors[j] = Calc.HexToColor(colorStrings[j].Trim(','));
@@ -41,7 +46,7 @@ public class DiagonalStardustFG : Backdrop
     private void Reset(int i, float p)
     {
         particles[i].Percent = p;
-        particles[i].Position = new Vector2(Calc.Random.Range(0, Utils.GameplayBufferWidth), Calc.Random.Range(0, Utils.GameplayBufferHeight));
+        particles[i].Position = new Vector2(Calc.Random.Range(0, Utils.GameplayBufferWidth) / Parallax, Calc.Random.Range(0, Utils.GameplayBufferHeight) / Parallax);
         particles[i].Speed = Calc.Random.Range(4, 14);
         particles[i].Spin = Calc.Random.Range(0.25f, MathF.PI * 6f);
         particles[i].Duration = Calc.Random.Range(1f, 4f);
@@ -87,14 +92,14 @@ public class DiagonalStardustFG : Backdrop
         {
             Vector2 position = new Vector2
             {
-                X = Utils.Mod(particles[i].Position.X - camera.X, Utils.GameplayBufferWidth),
-                Y = Utils.Mod(particles[i].Position.Y - camera.Y, Utils.GameplayBufferHeight)
+                X = Utils.Mod(particles[i].Position.X - camera.X, Utils.GameplayBufferWidth / Parallax),
+                Y = Utils.Mod(particles[i].Position.Y - camera.Y, Utils.GameplayBufferHeight / Parallax)
             };
             float percent = particles[i].Percent;
             float num = !(percent < 0.7f) ? Calc.ClampedMap(percent, 0.7f, 1f, 1f, 0f) : Calc.ClampedMap(percent, 0f, 0.3f);
             num *= FadeAlphaMultiplier;
             //Draw.Rect(position, scale.X, scale.Y, colors[particles[i].Color] * (fade * num));
-            Draw.LineAngle(position, (-particles[i].Angle).Angle(), scale.X, colors[particles[i].Color] * (fade * num));
+            Draw.LineAngle(position * Parallax, (-particles[i].Angle).Angle(), scale.X, colors[particles[i].Color] * (fade * num) * Alpha);
         }
     }
 }

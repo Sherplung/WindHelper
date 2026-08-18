@@ -236,6 +236,12 @@ style.effects.WindHelper/DiagonalWindSnowFG.description.density=Number of partic
 style.effects.WindHelper/DiagonalWindSnowFG.attribute.thinningFactor= Thinning
 style.effects.WindHelper/DiagonalWindSnowFG.description.thinningFactor=How much the particles become thinner with speed. Thinning is proportional to the natural log of the wind speed multiplied by this factor. Smaller numbers mean less thinning.
 
+style.effects.WindHelper/DiagonalWindSnowFG.attribute.scroll=Scroll
+style.effects.WindHelper/DiagonalWindSnowFG.description.scroll=The Scroll/Parallax of the particles.
+
+style.effects.WindHelper/DiagonalWindSnowFG.attribute.alpha=Alpha
+style.effects.WindHelper/DiagonalWindSnowFG.description.alpha=The Alpha of the particles.
+
 # Diagonal Star Dust
 
 style.effects.WindHelper/DiagonalStardustFG.name=Star Dust (Diagonal)
@@ -245,3 +251,9 @@ style.effects.WindHelper/DiagonalStardustFG.description.colors=Comma-separated l
 
 style.effects.WindHelper/DiagonalStardustFG.attribute.density=Density
 style.effects.WindHelper/DiagonalStardustFG.description.density=Number of particles rendered.
+
+style.effects.WindHelper/DiagonalStardustFG.attribute.scroll=Scroll
+style.effects.WindHelper/DiagonalStardustFG.description.scroll=The Scroll/Parallax of the particles.
+
+style.effects.WindHelper/DiagonalStardustFG.attribute.alpha=Alpha
+style.effects.WindHelper/DiagonalStardustFG.description.alpha=The Alpha of the particles.
