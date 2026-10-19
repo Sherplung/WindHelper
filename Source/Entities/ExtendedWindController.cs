@@ -239,13 +239,6 @@ public class ExtendedWindController : WindController
             }
         }
 
-        // actually move stuff
-        level.Wind = incrementerPattern + incrementerAdditive;
-        if (level.Wind.Equals(Vector2.Zero) || level.Transitioning)
-        {
-            return;
-        }
-
         //crystalline helper overlap protection
         if (WindHelperModule.CrystallineHelperLoaded && Utils.CrystallineWindControllerExists(Scene))
         {
@@ -253,6 +246,13 @@ public class ExtendedWindController : WindController
             {
                 component.Move(incrementerAdditive * 0.1f * Engine.DeltaTime);
             }
+            return;
+        }
+
+        // actually move stuff
+        level.Wind = incrementerPattern + incrementerAdditive;
+        if (level.Wind.Equals(Vector2.Zero) || level.Transitioning)
+        {
             return;
         }
         foreach (WindMover component in Scene.Tracker.GetComponents<WindMover>().Cast<WindMover>())

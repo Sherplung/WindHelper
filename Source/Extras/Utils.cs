@@ -91,6 +91,12 @@ public static class Utils
     }
 
     [UsedImplicitly]
+    internal static void LogDebug(string message)
+    {
+        Logger.Log(LogLevel.Debug, "Wind Helper", message);
+    }
+
+    [UsedImplicitly]
     internal static void LogInfo(string message)
     {
         Logger.Log(LogLevel.Info, "Wind Helper", message);

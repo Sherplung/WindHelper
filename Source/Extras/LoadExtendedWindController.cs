@@ -27,9 +27,16 @@ public static class LoadExtendedWindController
         {
             return data.Name.StartsWith("WindHelper") || data.Has("_windHelper");
         }
-
+        bool windHelperStylegroundExists = false;
+        foreach (BinaryPacker.Element child in session.MapData.Background.Children.Union(session.MapData.Foreground.Children)) 
+        {
+            if (child.Name.Contains("WindHelper"))
+            {
+                windHelperStylegroundExists = true;
+            }
+        }
         EntityData entityData = session.MapData.Levels.SelectMany(l => l.Entities).FirstOrDefault(RequiresWindHelper);
-        return entityData != null || session.MapData.Levels.SelectMany(l => l.Triggers).Any(RequiresWindHelper);
+        return entityData != null || session.MapData.Levels.SelectMany(l => l.Triggers).Any(RequiresWindHelper) || windHelperStylegroundExists;
     }
 
     private static void CheckForWindHelper(On.Celeste.LevelLoader.orig_ctor orig, LevelLoader self, Session session, Vector2? startPosition)
@@ -42,6 +49,10 @@ public static class LoadExtendedWindController
     {
         if (!WindHelperIsNeeded) return;
 
+        if (level.windController is not null && (level.windController.GetType() != typeof(ExtendedWindController)))
+        {
+            level.windController.RemoveSelf();
+        }
         level.Add(level.windController = new ExtendedWindController(level.Session.LevelData.WindPattern));
         if (playerIntro == Player.IntroTypes.Transition) return;
 
